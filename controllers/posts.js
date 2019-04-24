@@ -30,6 +30,18 @@ router.post('/', async (req, res) => {
 	}
 })
 
+router.get('/:id', async (req, res) => {
+	try{
+		const foundPost = await Post.findOne({_id: req.params.id})
+		res.render('posts/show.ejs', {
+			post: foundPost
+		})
+	}
+	catch(err){
+		res.send(err)
+	}
+})
+
 
 
 
