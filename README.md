@@ -1,3 +1,6 @@
+
+////////// USER STORIES FOR MVP //////////
+
 -user is directed to main domain
 
 -user sees columns of subitted posts/listings/events etc and a logged-out(login/register)logged-in(/user) button, and post button
@@ -21,6 +24,7 @@
 
 -- -- STRETCH GOALS -- -- 
 
+-list date and time with posts
 -uploading images for specific postings, etc.
 -more specific profile input fields like phone number, linkdIn, twitter, etc.
 -display a googleMap within the posting page if they give a specific location in an address field.
