@@ -3,11 +3,16 @@
 <p class="text-danger"> message %></p> -->
 
 <form action="/users/register" method="POST">
-  <input type="text" name="username" placeholder="username">
-  <input type="password" name="password" placeholder="password">
+  <input type="email" name="email" placeholder="email*">
+  <input type="text" name="phone" placeholder="phone number">
+  <input type="text" name="linkedin" placeholder="linkedin">
+  <input type="text" name="username" placeholder="username*">
+  <input type="password" name="password" placeholder="password*">
 
   <button>Register</button>
 </form>
+
+<h4>* = required</h4>
 
 <small>Already have an account? <a href="/users/login">Login here</a></small>
 
