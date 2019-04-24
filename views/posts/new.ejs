@@ -1,0 +1,11 @@
+<%- include ../partials/header.ejs %>
+<form action="/posts" method="POST">
+	<input type="text" name="title" placeholder="title"><br>
+	<!-- <option></option> -->
+	<input type="text" name="image" placeholder="image"><br>
+	<textarea name="description" placeholder="description"></textarea><br>
+	<input type="text" name="location" placeholder="location"><br>
+	<input type="text" name="email" placeholder="email"><br>
+	<button>Create Post</button>
+</form>
+<%- include ../partials/footer.ejs %>

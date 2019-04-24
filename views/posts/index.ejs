@@ -1,0 +1,12 @@
+<%- include ../partials/header.ejs %>
+
+	<main>
+		<ul>
+			<%posts.forEach((post) => {%>
+				<li>
+					<a href=""><%=post.title%></a>
+				</li>
+			<%})%>
+		</ul>
+	</main>
+<%- include ../partials/footer.ejs %>

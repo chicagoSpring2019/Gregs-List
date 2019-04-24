@@ -17,7 +17,8 @@ const postSchema = new mongoose.Schema({
 	category: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'category'
-	}]
+	}],
+	date: {type: Date, defualt: Date.now}
 });
 
 const Post = mongoose.model('Post', postSchema);
