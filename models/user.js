@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		required: true
-	}
+	},
 	phone: Number,
 	linkedin: String,
 	admin: Boolean,
