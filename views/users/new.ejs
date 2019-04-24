@@ -1,0 +1,14 @@
+<%- include ../partials/header.ejs %>
+<!-- 
+<p class="text-danger"> message %></p> -->
+
+<form action="/users/register" method="POST">
+  <input type="text" name="username" placeholder="username">
+  <input type="password" name="password" placeholder="password">
+
+  <button>Register</button>
+</form>
+
+<small>Already have an account? <a href="/users/login">Login here</a></small>
+
+<%- include ../partials/footer.ejs %>
