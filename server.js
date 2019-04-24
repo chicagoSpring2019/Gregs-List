@@ -7,7 +7,7 @@ require('./db/db')
 
 const usersController  = require('./controllers/users');
 const postsController = require('./controllers/posts');
-const categoriesController     = require('./controllers/categoriesController');
+//const categoriesController     = require('./controllers/categoriesController');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
@@ -26,7 +26,7 @@ app.use(session({
 
 app.use('/users', usersController);
 app.use('/posts', postsController);
-app.use('/categories', categoriesController);
+//app.use('/categories', categoriesController);
 
 
 app.listen(3000, () => {
