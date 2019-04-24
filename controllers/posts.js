@@ -42,6 +42,38 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
+router.get('/:id/edit', async (req, res) => {
+	try{
+		const foundPost = await Post.findOne({_id: req.params.id})
+		res.render('posts/edit.ejs', {
+			post: foundPost
+		})
+	}
+	catch(err){
+		res.send(err)
+	}
+})
+
+router.put('/:id', async (req, res) => {
+	try{
+		const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
+		res.redirect('/posts/' + req.params.id)
+	}
+	catch(err){
+		res.send(err)
+	}
+})
+
+router.delete('/:id', async (req, res) => {
+	try{
+		const deletePost = await Post.deleteOne({_id: req.params.id})
+		res.redirect('/posts')
+	}
+	catch(err){
+		res.send(err)
+	}
+})
+
 
 
 
