@@ -32,6 +32,7 @@ h1{
 
 .create{
 	margin-top: 16px;
+	margin-right: 90px;
 	padding: 5px;
 	border-radius: 30px;
 	background-color: rgb(254, 145, 36)
@@ -45,4 +46,44 @@ h1{
 
 body{
 	background-color: lightgray;
+}
+
+.category{
+	margin-top: 10px;
+	margin-bottom: 1px;
+	display: flex;
+	justify-content: center;
+}
+
+.categoryList{
+	background-color: rgb(130, 190, 170);
+	margin: 0 auto;
+	margin-bottom: 20px;
+	padding: 15px;
+	width: 30%;
+	text-align: center;
+}
+
+.new{
+	width: 400px;
+	background-color: gray;
+	margin: 20px auto;
+	padding: 40px;
+	border-radius: 8px;;
+}
+.new input, textarea, button, p{
+	display: block;
+	margin: 5px auto;
+	width: 200px;
+}
+
+h2{
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+textarea{
+	width: 300px;
+	height: 150px;
 }
