@@ -1,13 +1,16 @@
 <%- include ../partials/header.ejs %>
-	<a href="/posts/<%=post._id%>/edit">Edit Post</a>
-	<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-		<button>Delete Post</button>
-	</form>
-
-	<h1><%=post.title%></h1>
-	<img src="<%=post.image%>">
-	<p><%=post.description%></p>
-	<p><%=post.email%></p>
-	<p><%=post.location%></p>
+	<header class="action">
+		<a href="/posts/<%=post._id%>/edit">Edit Post</a>
+		<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+			<button class="delete">Delete Post</button>
+		</form>
+	</header>
+	<main>
+		<h1><%=post.title%></h1>
+		<img src="<%=post.image%>">
+		<p><%=post.description%></p>
+		<p><%=post.email%></p>
+		<p><%=post.location%></p>
+	</main>
 
 <%- include ../partials/footer.ejs %>
