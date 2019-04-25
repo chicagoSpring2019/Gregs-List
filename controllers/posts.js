@@ -27,20 +27,22 @@ router.get('/new', async (req, res) => {
 	}
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) => { console.log("hey hi hello");
 	try{
 		// write logic that if req.session.name is not a thing
 		// or if req.session.loggedIn is not a thing or false
 		//// disallow, 
 
 		// otherwise
-		const foundUser = await User.find({name: req.session.name});
+		const foundUser = await User.findOne({'name': createdUser.name});
 
 		console.log(req.session);
 		const createdPost = await Post.create(req.body);
 		console.log(createdPost + "<--- created post");
 		console.log(foundUser + "<---- the found user before its pushed");
 		foundUser.posts.push(createdPost);
+		console.log(foundUser + "cl after push but before save");
+		console.log(foundUser.posts);
 		foundUser.save()
 		console.log(foundUser + "<---- the found user");
 		res.redirect('/posts')
