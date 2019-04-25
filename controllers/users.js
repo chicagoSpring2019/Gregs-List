@@ -67,39 +67,20 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
-  // Query the database to see if the user exists
   try {
-    console.log(req.body);
     const foundUser = await User.findOne({'name': req.body.name});
-    console.log(foundUser +
-       "found user in login route");
-    // Is foundUser a truthy value, if it is its the user object,
-    // if we didn't find anything then foundUser === null a falsy value
     if(foundUser){
-      console.log("test to see if foundUser = true");
-      // since the user exist compare the passwords
-      console.log(req.body.password + "  <=-=-=-=- reqbody password");
-      console.log(foundUser.password + "  <=-=-=-=- f userss password");
       if(bcrypt.compareSync(req.body.password, foundUser.password) === true){
-        // set up the session
-        console.log("\n \n testing if they are returning equal");
         req.session.message = '';
         req.session.loggedIn = true;
         req.session.userId = foundUser._id;
-        console.log(req.session, " successful in login")
         res.redirect('/posts');
-
       } else {
-        // redirect them back to the login with a message
-        console.log(req.session.message);
         req.session.message = "Username or password is incorrect";
         res.redirect('/users/login');
       }
-
     } else {
-
       req.session.message = 'Username or Password is incorrect';
-
       res.redirect('/users/login');
     }
   } catch(err){
