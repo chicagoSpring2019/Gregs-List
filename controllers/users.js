@@ -7,12 +7,16 @@ const bcrypt = require('bcryptjs')
 
 ///////////////// AUTH //////////////
 //show login page
-router.get('/login', async (req, res) => {
-	res.render('users/login.ejs');
+router.get('/login', async (req, res, next) => {
+  const msg = req.session.message
+  req.session.message = ''
+	res.render('users/login.ejs', {
+    message: msg
+  });
 });
 
 //show register page
-router.get('/register', (req, res) => {
+router.get('/register', (req, res, next) => {
 	const msg = req.session.message
 	req.session.message = ''
 	res.render('users/new.ejs', {
@@ -21,7 +25,7 @@ router.get('/register', (req, res) => {
 });
 
 /// create new user from register page ///
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   const password = req.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const userDbEntry = {};
@@ -48,12 +52,12 @@ router.post('/register', async (req, res) => {
       res.redirect('/posts/')
     }
   } catch(err){
-      res.send(err)
+      next(err)
     }
 });
 
 // login as a user/ start session
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     const foundUser = await User.findOne({'name': req.body.name});
     if(foundUser){
@@ -63,7 +67,7 @@ router.post('/login', async (req, res) => {
         req.session.userId = foundUser._id;
         res.redirect('/posts');
       } else {
-        req.session.message = "Username or password is incorrect";
+        req.session.message = "Username or Password is incorrect";
         res.redirect('/users/login');
       }
     } else {
@@ -71,12 +75,12 @@ router.post('/login', async (req, res) => {
       res.redirect('/users/login');
     }
   } catch(err){
-    res.send(err);
+    next(err);
   }
 });
 
 // logout as a user/ end session
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
     if(err){
       res.send(err);
@@ -104,14 +108,14 @@ router.get('/:id', async (req, res, next) => {
 ///
 //
 //deletes user and all posts
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   try{
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     const deletedUsersPosts = await Post.deleteMany({_id: {$in: deletedUser.posts}});
     res.redirect('/posts')
   }  
   catch(err) {
-    res.send(err);
+    next(err);
   }
 })
 
@@ -119,28 +123,26 @@ router.delete('/:id', async (req, res) => {
 ///
 //
 //shows user edit page
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', async (req, res, next) => {
   try {
-    console.log("\n This be the try ");
     const foundUser = await User.findById(req.params.id);
-    console.log("\n the user has been found:", foundUser);
     res.render('users/edit.ejs', {
       user: foundUser
     });
   }
   catch(err) {
-    res.send(err);
+    next(err);
   }
 });
 
 // update the user
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/users/' + req.params.id)
   }  
   catch(err) {
-    res.send(err)
+    next(err)
   }
 })
 

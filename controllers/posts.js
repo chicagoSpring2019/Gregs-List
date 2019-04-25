@@ -5,7 +5,7 @@ const User = require('../models/user')
 const Category = require('../models/category')
 
 // MAIN PAGE - Lists all the main posts
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
 	try{
 		const allPosts = await Post.find({});
 		res.render('posts/index.ejs', {
@@ -13,23 +13,23 @@ router.get('/', async (req, res) => {
 		})
 	}
 	catch(err){
-		res.send(err)
+		next(err)
 	}
 })
 
 // ROUTE TO THE POST CREATION PAGE
-router.get('/new', (req, res) => {
+router.get('/new', (req, res, next) => {
 	// ONLY Reachable if user id logged in
 	if(req.session.loggedIn === true) {
 		res.render('posts/new.ejs')
 	} else {
 		req.session.message = "must be logged in to contribute";
-		res.redirect('/users/register')	
+		res.redirect('/users/login')	
 	}
 })
 
 // ROUTE TO POST NEW POSTS
-router.post('/', async (req, res) => { 
+router.post('/', async (req, res, next) => { 
 	try {
 		const foundUser = await User.findById(req.session.userId);
 		const createdPost = await Post.create(req.body);
@@ -38,12 +38,12 @@ router.post('/', async (req, res) => {
 		res.redirect('/posts')
 	}
 	catch(err) {
-		res.send(err)
+		next(err)
 	}
 })
 
 // SHOW PAGE FOR POSTS
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
 	try{
 		// Returns one post from the specified user, 
 		// that matches the parameters and puts it in an array.
@@ -55,12 +55,12 @@ router.get('/:id', async (req, res) => {
 		})
 	}
 	catch(err){
-		res.send(err)
+		next(err)
 	}
 })
 
 // ROUTE to the post edit page
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', async (req, res, next) => {
 	try{
 		const foundPost = await Post.findOne({_id: req.params.id})
 		res.render('posts/edit.ejs', {
@@ -68,7 +68,7 @@ router.get('/:id/edit', async (req, res) => {
 		})
 	}
 	catch(err){
-		res.send(err)
+		next(err)
 	}
 })
 
@@ -76,13 +76,13 @@ router.get('/:id/edit', async (req, res) => {
 //
 ///////// add in original poster edit functionality ///////////
 //
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
 	try{
 		const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
 		res.redirect('/posts/' + req.params.id)
 	}
 	catch(err){
-		res.send(err)
+		next(err)
 	}
 })
 
@@ -90,13 +90,13 @@ router.put('/:id', async (req, res) => {
 //
 ///////// add in original poster edit functionality ///////////
 //
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
 	try{
 		const deletePost = await Post.deleteOne({_id: req.params.id})
 		res.redirect('/posts')
 	}
 	catch(err){
-		res.send(err)
+		next(err)
 	}
 })
 

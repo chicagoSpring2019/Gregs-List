@@ -1,8 +1,12 @@
 <%- include ../partials/header.ejs %>
+<header></header>
+<form action="/users/<%=user.id%>?_method=DELETE" method="post" >
+	
+	<button>Delete User</button>
+</form>
 
-<h1> <%= user.name %> </h1>
-
-<h2> <%= user.name%>'s Posts</h2>
+<a href="/users/<%=user.id%>/edit">EDIT USER</a>
+<h1> <%= user.name%>'s Posts</h1>
 
 <ul>
 
@@ -14,10 +18,3 @@
 <% }) %>
 
 </ul>
-
-<form action="/users/<%=user.id%>?_method=DELETE" method="post" >
-	
-	<button>Delete User</button>
-</form>
-
-<a href="/users/<%=user.id%>/edit">EDIT USER</a>
