@@ -17,8 +17,6 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/new', async (req, res) => {
-	console.log("hey here's the session");
-	console.log(req.session);
 	if(req.session.loggedIn === true) {
 		res.render('posts/new.ejs')
 	} else {
@@ -28,17 +26,14 @@ router.get('/new', async (req, res) => {
 })
 
 router.post('/', async (req, res) => { 
-	console.log("hey hi hello");
 	try {
 		// write logic that if req.session.name is not a thing
 		// or if req.session.loggedIn is not a thing or false
 		//// disallow, 
-		console.log("in the try boiiii!!!");
-		console.log(req.params.id + "<======= reqparams");
-		// otherwise
-		const foundUser = await User.findOne({ _id: createdUser._id });
-		console.log(createdUser._id);
-		console.log(req.session);
+		console.log(req.session + ' This is the session');
+		console.log(req.session.userId);
+		const foundUser = await User.findById(req.session.userId);
+		console.log(foundUser);
 		const createdPost = await Post.create(req.body);
 		console.log(createdPost + "<--- created post");
 		console.log(foundUser + "<---- the found user before its pushed");

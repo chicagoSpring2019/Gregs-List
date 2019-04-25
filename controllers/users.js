@@ -43,7 +43,7 @@ router.post('/register', async (req, res, next) => {
       console.log(createdUser + "the created user! ");
       // they will be logged in (session)
       req.session.loggedIn = true 
-      req.session.userIs = createdUser._id
+      req.session.userId = createdUser._id
       req.session.message = "Welcome to the site, " + createdUser.name
       // redirect them to /
       res.redirect('/posts/')
@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
         console.log("\n \n testing if they are returning equal");
         req.session.message = '';
         req.session.loggedIn = true;
-        req.session.usersDbId = foundUser._id;
+        req.session.userId = foundUser._id;
         console.log(req.session, " successful in login")
         res.redirect('/posts');
 
