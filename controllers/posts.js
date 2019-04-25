@@ -4,6 +4,8 @@ const Post = require('../models/post')
 const User = require('../models/user')
 const Category = require('../models/category')
 
+
+// MAIN PAGE - Lists all the main posts
 router.get('/', async (req, res) => {
 	try{
 		const allPosts = await Post.find({});
@@ -16,7 +18,9 @@ router.get('/', async (req, res) => {
 	}
 })
 
-router.get('/new', async (req, res) => {
+// ROUTE TO THE POST CREATION PAGE
+router.get('/new', (req, res) => {
+	// ONLY Reachable if user id logged in
 	if(req.session.loggedIn === true) {
 		res.render('posts/new.ejs')
 	} else {
@@ -25,23 +29,13 @@ router.get('/new', async (req, res) => {
 	}
 })
 
+// ROUTE TO POST NEW POSTS
 router.post('/', async (req, res) => { 
 	try {
-		// write logic that if req.session.name is not a thing
-		// or if req.session.loggedIn is not a thing or false
-		//// disallow, 
-		console.log(req.session + ' This is the session');
-		console.log(req.session.userId);
 		const foundUser = await User.findById(req.session.userId);
-		console.log(foundUser);
 		const createdPost = await Post.create(req.body);
-		console.log(createdPost + "<--- created post");
-		console.log(foundUser + "<---- the found user before its pushed");
 		foundUser.posts.push(createdPost);
-		console.log(foundUser + "cl after push but before save");
-		console.log(foundUser.posts);
 		foundUser.save()
-		console.log(foundUser + "<---- the found user");
 		res.redirect('/posts')
 	}
 	catch(err) {
@@ -50,10 +44,11 @@ router.post('/', async (req, res) => {
 })
 
 
-// POST SHOW
+// SHOW PAGE FOR POSTS
 router.get('/:id', async (req, res) => {
 	try{
-		// Returns one post from the specified user, that matches the parameters and puts it in an array.
+		// Returns one post from the specified user, 
+		// that matches the parameters and puts it in an array.
 		const foundUser = await User.findOne({'posts': req.params.id})
 		.populate({path: 'posts', match: {_id: req.params.id}})
 		res.render('posts/show.ejs', {
@@ -66,6 +61,8 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
+
+// ROUTE to the post edit page
 router.get('/:id/edit', async (req, res) => {
 	try{
 		const foundPost = await Post.findOne({_id: req.params.id})
@@ -78,6 +75,10 @@ router.get('/:id/edit', async (req, res) => {
 	}
 })
 
+// ROUTE for updating posts
+//
+///////// add in original poster edit functionality ///////////
+//
 router.put('/:id', async (req, res) => {
 	try{
 		const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -88,6 +89,10 @@ router.put('/:id', async (req, res) => {
 	}
 })
 
+// DELETE ROUTE for posts
+//
+///////// add in original poster edit functionality ///////////
+//
 router.delete('/:id', async (req, res) => {
 	try{
 		const deletePost = await Post.deleteOne({_id: req.params.id})

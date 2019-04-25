@@ -141,7 +141,9 @@ router.get('/:id', async (req, res, next) => {
 	}
 })
 
-
+/// ONLy make possible if you are the logged in user ///
+///
+//
 router.delete('/:id', async (req, res) => {
   try{
     const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -153,6 +155,9 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+/// ONLy make possible if you are the logged in user ///
+///
+//
 router.get('/:id/edit', async (req, res) => {
   try {
     console.log("\n This be the try ");
