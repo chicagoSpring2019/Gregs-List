@@ -6,9 +6,9 @@
 
 <ul>
 
-<% posts.forEach((post) => { %>
+<% posts.forEach((post, i) => { %>
 	<li>
-		<%= post.title %>
+		<a href="/posts/<%= post.id %>"> <%= post.title %> </a>
 	</li>
 
 <% }) %>
