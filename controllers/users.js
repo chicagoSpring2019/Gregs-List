@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
         // set up the session
         console.log("\n \n testing if they are returning equal");
         req.session.message = '';
-        req.session.logged = true;
+        req.session.loggedIn = true;
         req.session.usersDbId = foundUser._id;
         console.log(req.session, " successful in login")
         res.redirect('/posts');

@@ -27,15 +27,17 @@ router.get('/new', async (req, res) => {
 	}
 })
 
-router.post('/', async (req, res) => { console.log("hey hi hello");
-	try{
+router.post('/', async (req, res) => { 
+	console.log("hey hi hello");
+	try {
 		// write logic that if req.session.name is not a thing
 		// or if req.session.loggedIn is not a thing or false
 		//// disallow, 
-
+		console.log("in the try boiiii!!!");
+		console.log(req.params.id + "<======= reqparams");
 		// otherwise
-		const foundUser = await User.findOne({'name': createdUser.name});
-
+		const foundUser = await User.findOne({ _id: createdUser._id });
+		console.log(createdUser._id);
 		console.log(req.session);
 		const createdPost = await Post.create(req.body);
 		console.log(createdPost + "<--- created post");
