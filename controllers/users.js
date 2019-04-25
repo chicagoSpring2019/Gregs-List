@@ -48,4 +48,20 @@ router.post('/register', async (req, res, next) => {
 
 })
 
+router.get('/:id', async (req, res, next) => {
+	try{
+		const foundUser = await User.findById(req.params.id)
+		console.log(foundUser + "<------ the found user in :id show")
+		.populate({path: 'posts', match: {_id: req.params.id}})
+			console.log(foundPosts + "<---- the retreieved posts");
+			res.render('posts/show.ejs',{
+				user: foundUser,
+				post: foundUser.posts[0]
+			})
+		
+	} catch(err) {
+		next(err)
+	}
+})
+
 module.exports = router;
