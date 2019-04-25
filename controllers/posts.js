@@ -44,16 +44,21 @@ router.post('/', async (req, res) => {
 		console.log(foundUser + "<---- the found user");
 		res.redirect('/posts')
 	}
-	catch(err){
+	catch(err) {
 		res.send(err)
 	}
 })
 
+
+// POST SHOW
 router.get('/:id', async (req, res) => {
 	try{
-		const foundPost = await Post.findOne({_id: req.params.id})
+		// Returns one post from the specified user, that matches the parameters and puts it in an array.
+		const foundUser = await User.findOne({'posts': req.params.id})
+		.populate({path: 'posts', match: {_id: req.params.id}})
 		res.render('posts/show.ejs', {
-			post: foundPost
+			post: foundUser.posts[0],
+			user: foundUser
 		})
 	}
 	catch(err){

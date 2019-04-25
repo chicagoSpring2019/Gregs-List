@@ -115,21 +115,37 @@ router.get('/logout', (req, res) => {
 
 
 
-
+// USER profile show 
 router.get('/:id', async (req, res, next) => {
 	try{
-		const foundUser = await User.findById(req.params.id)
-		console.log(foundUser + "<------ the found user in :id show")
-		.populate({path: 'posts', match: {_id: req.params.id}})
-			console.log(foundPosts + "<---- the retreieved posts");
-			res.render('posts/show.ejs',{
+		const foundUser = await User.findById(req.params.id).populate('posts')
+		console.log(foundUser + "<------ the found user in :id show");
+			console.log("<---- the retreieved posts");
+		
+			res.render('users/show.ejs',{
 				user: foundUser,
-				post: foundUser.posts[0]
+				posts: foundUser.posts
 			})
 		
 	} catch(err) {
 		next(err)
 	}
 })
+
+
+router.delete('/:id', async (req, res) => {
+  try{
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    const deletedUsersPosts = await Post.deleteMany({_id: {$in: deletedUser.posts}});
+    res.redirect('/posts')
+  }  
+  catch(err) {
+    res.send(err);
+  }
+})
+
+
+
+
 
 module.exports = router;
