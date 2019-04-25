@@ -3,8 +3,7 @@ const router = express.Router();
 const Post = require('../models/post')
 const User = require('../models/user')
 const Category = require('../models/category')
-
-
+const bcrypt = require('bcryptjs')
 
 ///////////////// AUTH //////////////
 
@@ -23,7 +22,17 @@ router.get('/register', (req, res) => {
 
 
 /// REGISTER ROUTE ///
-router.post('/register', async (req, res, next) => {
+router.post('/register', async (req, res) => {
+  const password = req.body.password;
+  const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+  const userDbEntry = {};
+    userDbEntry.name = req.body.name
+    userDbEntry.password = passwordHash
+    userDbEntry.description = req.body.description
+    userDbEntry.email = req.body.email
+    userDbEntry.phone = req.body.phone
+    userDbEntry.linkedin = req.body.linkedin
+  
   try {
     const found = await User.findOne({'name': req.body.name})
 
@@ -31,7 +40,7 @@ router.post('/register', async (req, res, next) => {
     console.log(found);
 
     // if that name is already taken
-    if(found !== null) {
+    if(found) {
       req.session.message = "Username already taken."
       // redirect to register page with a message
       res.redirect('/users/register')
@@ -39,7 +48,7 @@ router.post('/register', async (req, res, next) => {
     // else
     else {
       // create user
-      const createdUser = await User.create(req.body)
+      const createdUser = await User.create(userDbEntry)
       console.log(createdUser + "the created user! ");
       // they will be logged in (session)
       req.session.loggedIn = true 
@@ -48,10 +57,10 @@ router.post('/register', async (req, res, next) => {
       // redirect them to /
       res.redirect('/posts/')
     }
-  } catch(err) {
-    next(err)
-  }
-})
+  } catch(err){
+      res.send(err)
+    }
+});
 
 
 
@@ -69,9 +78,9 @@ router.post('/login', async (req, res) => {
     if(foundUser){
       console.log("test to see if foundUser = true");
       // since the user exist compare the passwords
-      console.log(req.body.password + "< =-=-=-=- reqbody password");
-      console.log(foundUser.password + "< =-=-=-=- f userss password");
-      if(req.body.password === foundUser.password) {//bcrypt.compareSync(req.body.password, foundUser.password) === true){
+      console.log(req.body.password + "  <=-=-=-=- reqbody password");
+      console.log(foundUser.password + "  <=-=-=-=- f userss password");
+      if(bcrypt.compareSync(req.body.password, foundUser.password) === true){
         // set up the session
         console.log("\n \n testing if they are returning equal");
         req.session.message = '';
