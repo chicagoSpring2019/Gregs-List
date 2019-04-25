@@ -17,12 +17,32 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/new', async (req, res) => {
-	res.render('posts/new.ejs')
+	console.log("hey here's the session");
+	console.log(req.session);
+	if(req.session.loggedIn === true) {
+		res.render('posts/new.ejs')
+	} else {
+		req.session.message = "must be logged in to contribute";
+		res.redirect('/users/register')	
+	}
 })
 
 router.post('/', async (req, res) => {
 	try{
+		// write logic that if req.session.name is not a thing
+		// or if req.session.loggedIn is not a thing or false
+		//// disallow, 
+
+		// otherwise
+		const foundUser = await User.find({name: req.session.name});
+
+		console.log(req.session);
 		const createdPost = await Post.create(req.body);
+		console.log(createdPost + "<--- created post");
+		console.log(foundUser + "<---- the found user before its pushed");
+		foundUser.posts.push(createdPost);
+		foundUser.save()
+		console.log(foundUser + "<---- the found user");
 		res.redirect('/posts')
 	}
 	catch(err){

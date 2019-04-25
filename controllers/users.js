@@ -12,14 +12,14 @@ router.get('/register', (req, res) => {
 	const msg = req.session.message
 	req.session.message = ''
 	res.render('users/new.ejs', {
+    message: msg
 	});	
 });
 
 router.post('/register', async (req, res, next) => {
 
   try {
-    // find the user -- to see if they exist
-    const found = await User.findOne({username: req.body.username})
+    const found = await User.findOne({name: req.body.name})
 
     console.log("\nhere is found:");
     console.log(found);
@@ -34,10 +34,11 @@ router.post('/register', async (req, res, next) => {
     else {
       // create user
       const createdUser = await User.create(req.body)
+      console.log(createdUser + "the created user! ");
       // they will be logged in (session)
       req.session.loggedIn = true 
-      req.session.username = createdUser.username
-      req.session.message = "Welcome to the site, " + createdUser.username
+      req.session.name = createdUser.name
+      req.session.message = "Welcome to the site, " + createdUser.name
       // redirect them to /
       res.redirect('/posts/')
     }
