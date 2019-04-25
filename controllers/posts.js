@@ -4,7 +4,6 @@ const Post = require('../models/post')
 const User = require('../models/user')
 const Category = require('../models/category')
 
-
 // MAIN PAGE - Lists all the main posts
 router.get('/', async (req, res) => {
 	try{
@@ -43,7 +42,6 @@ router.post('/', async (req, res) => {
 	}
 })
 
-
 // SHOW PAGE FOR POSTS
 router.get('/:id', async (req, res) => {
 	try{
@@ -60,7 +58,6 @@ router.get('/:id', async (req, res) => {
 		res.send(err)
 	}
 })
-
 
 // ROUTE to the post edit page
 router.get('/:id/edit', async (req, res) => {
@@ -102,17 +99,5 @@ router.delete('/:id', async (req, res) => {
 		res.send(err)
 	}
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;

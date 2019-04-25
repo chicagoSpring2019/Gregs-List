@@ -6,11 +6,12 @@ const Category = require('../models/category')
 const bcrypt = require('bcryptjs')
 
 ///////////////// AUTH //////////////
-
+//show login page
 router.get('/login', async (req, res) => {
 	res.render('users/login.ejs');
 });
 
+//show register page
 router.get('/register', (req, res) => {
 	const msg = req.session.message
 	req.session.message = ''
@@ -19,9 +20,7 @@ router.get('/register', (req, res) => {
 	});	
 });
 
-
-
-/// REGISTER ROUTE ///
+/// create new user from register page ///
 router.post('/register', async (req, res) => {
   const password = req.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -31,30 +30,21 @@ router.post('/register', async (req, res) => {
     userDbEntry.description = req.body.description
     userDbEntry.email = req.body.email
     userDbEntry.phone = req.body.phone
-    userDbEntry.linkedin = req.body.linkedin
-  
+    userDbEntry.linkedin = req.body.linkedin 
   try {
     const found = await User.findOne({'name': req.body.name})
-
-    console.log("\nhere is found:");
-    console.log(found);
-
     // if that name is already taken
     if(found) {
       req.session.message = "Username already taken."
       // redirect to register page with a message
       res.redirect('/users/register')
     }
-    // else
     else {
       // create user
       const createdUser = await User.create(userDbEntry)
-      console.log(createdUser + "the created user! ");
       // they will be logged in (session)
       req.session.loggedIn = true 
       req.session.userId = createdUser._id
-      req.session.message = "Welcome to the site, " + createdUser.name
-      // redirect them to /
       res.redirect('/posts/')
     }
   } catch(err){
@@ -62,10 +52,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
-
-
-
+// login as a user/ start session
 router.post('/login', async (req, res) => {
   try {
     const foundUser = await User.findOne({'name': req.body.name});
@@ -88,7 +75,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-
+// logout as a user/ end session
 router.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if(err){
@@ -98,25 +85,16 @@ router.get('/logout', (req, res) => {
     }
   })
 })
-
-
 ////////// ^^^^ AUTH ^^^ ///////////////
-
-
-
 
 // USER profile show 
 router.get('/:id', async (req, res, next) => {
 	try{
 		const foundUser = await User.findById(req.params.id).populate('posts')
-		console.log(foundUser + "<------ the found user in :id show");
-			console.log("<---- the retreieved posts");
-		
 			res.render('users/show.ejs',{
 				user: foundUser,
 				posts: foundUser.posts
-			})
-		
+			})	
 	} catch(err) {
 		next(err)
 	}
@@ -125,6 +103,7 @@ router.get('/:id', async (req, res, next) => {
 /// ONLy make possible if you are the logged in user ///
 ///
 //
+//deletes user and all posts
 router.delete('/:id', async (req, res) => {
   try{
     const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -139,6 +118,7 @@ router.delete('/:id', async (req, res) => {
 /// ONLy make possible if you are the logged in user ///
 ///
 //
+//shows user edit page
 router.get('/:id/edit', async (req, res) => {
   try {
     console.log("\n This be the try ");
@@ -153,6 +133,7 @@ router.get('/:id/edit', async (req, res) => {
   }
 });
 
+// update the user
 router.put('/:id', async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -162,9 +143,5 @@ router.put('/:id', async (req, res) => {
     res.send(err)
   }
 })
-
-
-
-
 
 module.exports = router;
