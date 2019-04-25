@@ -144,6 +144,30 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+router.get('/:id/edit', async (req, res) => {
+  try {
+    console.log("\n This be the try ");
+    const foundUser = await User.findById(req.params.id);
+    console.log("\n the user has been found:", foundUser);
+    res.render('users/edit.ejs', {
+      user: foundUser
+    });
+  }
+  catch(err) {
+    res.send(err);
+  }
+});
+
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    res.redirect('/users/' + req.params.id)
+  }  
+  catch(err) {
+    res.send(err)
+  }
+})
+
 
 
 
