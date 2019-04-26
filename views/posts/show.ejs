@@ -13,7 +13,8 @@
 		<p><%=post.description%></p>
 		<p><%=post.email%></p>
 		<p><%=post.location%></p>
+		Date Posted: <p><%=post.date.toDateString()%></p>
 	</main>
-	<a href="/users/<%= user._id %>"> Poster:<%= user.name %></a>
+	User: <a href="/users/<%= user._id %>"><%= user.name %></a>
 
 <%- include ../partials/footer.ejs %>

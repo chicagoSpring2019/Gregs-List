@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
 	location: String,
 	email: String,
 	category: String,
-	date: {type: Date, defualt: Date.now}
+	date: Date
 });
 
 const Post = mongoose.model('Post', postSchema);

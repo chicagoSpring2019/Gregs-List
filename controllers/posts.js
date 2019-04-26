@@ -7,6 +7,9 @@ const User = require('../models/user')
 router.get('/', async (req, res, next) => {
 	try{
 		const allPosts = await Post.find({});
+		allPosts.sort(function(a,b){
+  		return new Date(b.date) - new Date(a.date);
+		});
 		res.render('posts/index.ejs', {
 			posts: allPosts,
 			session: req.session
@@ -34,7 +37,15 @@ router.get('/new', (req, res, next) => {
 router.post('/', async (req, res, next) => { 
 	try {
 		const foundUser = await User.findById(req.session.userId);
-		const createdPost = await Post.create(req.body);
+		const postDbEntry = {};
+		postDbEntry.title = req.body.title
+		postDbEntry.image = req.body.image
+		postDbEntry.description = req.body.description
+		postDbEntry.location = req.body.location
+		postDbEntry.email = req.body.email
+		postDbEntry.category = req.body.category
+		postDbEntry.date = Date.now();
+		const createdPost = await Post.create(postDbEntry);
 		foundUser.posts.push(createdPost);
 		foundUser.save()
 		res.redirect('/posts')
