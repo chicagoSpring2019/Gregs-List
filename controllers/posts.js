@@ -49,9 +49,12 @@ router.get('/:id', async (req, res, next) => {
 		// that matches the parameters and puts it in an array.
 		const foundUser = await User.findOne({'posts': req.params.id})
 		.populate({path: 'posts', match: {_id: req.params.id}})
+		console.log("\nfoundUser");
+		console.log(foundUser);
 		res.render('posts/show.ejs', {
 			post: foundUser.posts[0],
-			user: foundUser
+			user: foundUser,
+			session: req.session
 		})
 	}
 	catch(err){
@@ -61,21 +64,24 @@ router.get('/:id', async (req, res, next) => {
 
 // ROUTE to the post edit page
 router.get('/:id/edit', async (req, res, next) => {
-	try{
-		const foundPost = await Post.findOne({_id: req.params.id})
-		res.render('posts/edit.ejs', {
-			post: foundPost
-		})
+	const foundUser = await User.findOne({'posts': req.params.id})
+	if(foundUser._id == req.session.userId){
+		try{
+			const foundPost = await Post.findOne({_id: req.params.id})
+			res.render('posts/edit.ejs', {
+				post: foundPost
+			})
+		}
+		catch(err){
+			next(err)
+		}
 	}
-	catch(err){
-		next(err)
+	else{
+		res.redirect('/posts/' + req.params.id)
 	}
 })
 
 // ROUTE for updating posts
-//
-///////// add in original poster edit functionality ///////////
-//
 router.put('/:id', async (req, res, next) => {
 	try{
 		const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -87,9 +93,6 @@ router.put('/:id', async (req, res, next) => {
 })
 
 // DELETE ROUTE for posts
-//
-///////// add in original poster edit functionality ///////////
-//
 router.delete('/:id', async (req, res, next) => {
 	try{
 		const deletePost = await Post.deleteOne({_id: req.params.id})

@@ -1,10 +1,12 @@
 <%- include ../partials/header.ejs %>
-	<header class="action">
-		<a href="/posts/<%=post._id%>/edit">Edit Post</a>
-		<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-			<button class="delete">Delete Post</button>
-		</form>
-	</header>
+	<%if(user._id == session.userId){ %>
+		<header class="action">
+			<a href="/posts/<%=post._id%>/edit">Edit Post</a>
+			<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+				<button class="delete">Delete Post</button>
+			</form>
+		</header>
+	<%}%>
 	<main>
 		<h1><%=post.title%></h1>
 		<img src="<%=post.image%>">

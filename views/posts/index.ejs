@@ -3,11 +3,11 @@
 	<main>
 		<h2 class="category">Category</h2>
 		<ul class="categoryList">
-			<%posts.forEach((post) => {%>
+			<% posts.forEach((post) => { %>
 				<li>
 					<a href="/posts/<%=post._id%>"><%=post.title%></a>
 				</li>
-			<%})%>
+			<% }) %>
 		</ul>
 	</main>
 <%- include ../partials/footer.ejs %>

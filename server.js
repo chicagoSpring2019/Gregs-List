@@ -1,9 +1,9 @@
-//node modules
 const express        = require('express');
 const app            = express();
 const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
+
 require('./db/db')
 
 //controllers
@@ -20,7 +20,6 @@ app.use(session({
   resave: false, 
   saveUninitialized: false
 }));
-app.use()
 
 //controllers
 app.use('/users', usersController);

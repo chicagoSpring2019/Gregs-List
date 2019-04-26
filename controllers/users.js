@@ -65,6 +65,7 @@ router.post('/login', async (req, res, next) => {
         req.session.message = '';
         req.session.loggedIn = true;
         req.session.userId = foundUser._id;
+        console.log(req.session);
         res.redirect('/posts');
       } else {
         req.session.message = "Username or Password is incorrect";
@@ -93,20 +94,19 @@ router.get('/logout', (req, res, next) => {
 
 // USER profile show 
 router.get('/:id', async (req, res, next) => {
-	try{
-		const foundUser = await User.findById(req.params.id).populate('posts')
-			res.render('users/show.ejs',{
-				user: foundUser,
-				posts: foundUser.posts
-			})	
-	} catch(err) {
-		next(err)
-	}
+  try{
+  	const foundUser = await User.findById(req.params.id).populate('posts')
+  	res.render('users/show.ejs',{
+  		user: foundUser,
+  		posts: foundUser.posts,
+      session: req.session
+  	})	
+  } 
+  catch(err){
+  	next(err)
+  }
 })
 
-/// ONLy make possible if you are the logged in user ///
-///
-//
 //deletes user and all posts
 router.delete('/:id', async (req, res, next) => {
   try{
@@ -119,19 +119,21 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
-/// ONLy make possible if you are the logged in user ///
-///
-//
 //shows user edit page
 router.get('/:id/edit', async (req, res, next) => {
-  try {
-    const foundUser = await User.findById(req.params.id);
-    res.render('users/edit.ejs', {
-      user: foundUser
-    });
+  const foundUser = await User.findById(req.params.id);
+  if(foundUser._id == req.session.userId){
+    try {
+      res.render('users/edit.ejs', {
+        user: foundUser
+      });
+    }
+    catch(err) {
+      next(err);
+    }
   }
-  catch(err) {
-    next(err);
+  else{
+    res.redirect('/users/' + req.params.id)
   }
 });
 

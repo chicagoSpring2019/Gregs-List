@@ -63,14 +63,14 @@ body{
 	text-align: center;
 }
 
-.new{
+.new {
 	width: 400px;
 	background-color: gray;
 	margin: 20px auto;
 	padding: 40px;
 	border-radius: 8px;;
 }
-.new input, textarea, button{
+.new input, .new textarea, .new button, .new p{
 	display: block;
 	margin: 5px auto;
 	width: 200px;
