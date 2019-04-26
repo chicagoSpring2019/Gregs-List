@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const User = require('./user');
-const Category = require('./category');
 
 const postSchema = new mongoose.Schema({
 	title: {
@@ -15,11 +14,6 @@ const postSchema = new mongoose.Schema({
 	location: String,
 	email: String,
 	category: String,
-
-	// [{
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: 'category'
-	// }],
 	date: {type: Date, defualt: Date.now}
 });
 

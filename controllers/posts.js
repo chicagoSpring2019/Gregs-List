@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post')
 const User = require('../models/user')
-const Category = require('../models/category')
 
 // MAIN PAGE - Lists all the main posts
 router.get('/', async (req, res, next) => {
