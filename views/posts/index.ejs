@@ -1,13 +1,49 @@
 <%- include ../partials/header.ejs %>
 
 	<main>
-		<h2 class="category">Category</h2>
+		<% 
+		const jobs = [],
+		const meets = [],
+		const hires = [],
+		posts.forEach((post) => { 
+			if(post.category == 'job') {
+				jobs.push(post)
+			} else if (post.category == 'meet') {
+				meets.push(post)
+			} else if (post.category == 'hire') {
+				hires.push(post)
+			}
+		}%>
+
+
+
+		<h2 class="category">Jobs</h2>
 		<ul class="categoryList">
-			<% posts.forEach((post) => { %>
+			<% jobs.forEach((post) => { %>
 				<li>
 					<a href="/posts/<%=post._id%>"><%=post.title%></a>
 				</li>
 			<% }) %>
 		</ul>
+
+		<h2 class="category">Meet - ups</h2>
+		<ul class="categoryList">
+			<% jobs.forEach((post) => { %>
+				<li>
+					<a href="/posts/<%=post._id%>"><%=post.title%></a>
+				</li>
+			<% }) %>
+		</ul>
+
+		<h2 class="category">Job Candidates</h2>
+		<ul class="categoryList">
+			<% jobs.forEach((post) => { %>
+				<li>
+					<a href="/posts/<%=post._id%>"><%=post.title%></a>
+				</li>
+			<% }) %>
+		</ul>
+
+		
 	</main>
 <%- include ../partials/footer.ejs %>
