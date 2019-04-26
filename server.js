@@ -3,6 +3,7 @@ const app            = express();
 const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
+const User           = require('./models/user')
 
 require('./db/db')
 

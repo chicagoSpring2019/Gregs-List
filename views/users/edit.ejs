@@ -1,6 +1,6 @@
 <%- include ../partials/header.ejs %>
 
-<form class="new" action="/users/<%=user._id%>?_method=PUT" method="POST">
+<form class="form" action="/users/<%=user._id%>?_method=PUT" method="POST">
   <input type="email" name="email" placeholder="email*" value="<%=user.email%>" required>
   <input type="text" name="phone" placeholder="phone" value="<%=user.phone%>">
   <input type="text" name="linkedin" placeholder="LinkedIn" value="<%=user.linkedin%>">

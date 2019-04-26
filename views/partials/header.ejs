@@ -9,20 +9,22 @@
 	<nav>
 		<h1><a href="/posts">Gregs-List</a></h1>
 		<ul>
-			<li class="create">
+			<li class="createB">
 				<a href="/posts/new">Create Post</a>
 			</li>
 		</ul>
-		<ul class="log">
-			<li class="log">
-				<!-- want to add a link to the user that is logged -->
-				<a href="">Account</a>
-			</li>
-			<li class="log">
-				<a href="/users/login">Login</a>
-			</li>
-			<li class="log">
-				<a href="/users/logout">Logout</a>
-			</li>
+		<ul class="loginB">
+			<%if(session.loggedIn){ %>
+				<li class="loginB">
+					<a href="/users/<%=session.userId%>"><%=session.name%></a>
+				</li>
+				<li class="loginB">
+					<a href="/users/logout">Logout</a>
+				</li>
+			<%}else{%>
+				<li class="loginB">
+					<a href="/users/login">Login</a>
+				</li>
+			<%}%>
 		</ul>
 	</nav>

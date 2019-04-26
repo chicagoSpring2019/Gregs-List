@@ -9,7 +9,8 @@ router.get('/', async (req, res, next) => {
 	try{
 		const allPosts = await Post.find({});
 		res.render('posts/index.ejs', {
-			posts: allPosts
+			posts: allPosts,
+			session: req.session
 		})
 	}
 	catch(err){
@@ -69,7 +70,8 @@ router.get('/:id/edit', async (req, res, next) => {
 		try{
 			const foundPost = await Post.findOne({_id: req.params.id})
 			res.render('posts/edit.ejs', {
-				post: foundPost
+				post: foundPost,
+				session: req.session
 			})
 		}
 		catch(err){

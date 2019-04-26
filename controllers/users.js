@@ -11,7 +11,8 @@ router.get('/login', async (req, res, next) => {
   const msg = req.session.message
   req.session.message = ''
 	res.render('users/login.ejs', {
-    message: msg
+    message: msg,
+    session: req.session
   });
 });
 
@@ -20,7 +21,8 @@ router.get('/register', (req, res, next) => {
 	const msg = req.session.message
 	req.session.message = ''
 	res.render('users/new.ejs', {
-    message: msg
+    message: msg,
+    session: req.session
 	});	
 });
 
@@ -49,6 +51,7 @@ router.post('/register', async (req, res, next) => {
       // they will be logged in (session)
       req.session.loggedIn = true 
       req.session.userId = createdUser._id
+      req.session.name = req.body.name
       res.redirect('/posts/')
     }
   } catch(err){
@@ -65,7 +68,7 @@ router.post('/login', async (req, res, next) => {
         req.session.message = '';
         req.session.loggedIn = true;
         req.session.userId = foundUser._id;
-        console.log(req.session);
+        req.session.name = req.body.name
         res.redirect('/posts');
       } else {
         req.session.message = "Username or Password is incorrect";
@@ -125,7 +128,8 @@ router.get('/:id/edit', async (req, res, next) => {
   if(foundUser._id == req.session.userId){
     try {
       res.render('users/edit.ejs', {
-        user: foundUser
+        user: foundUser,
+        session: req.session
       });
     }
     catch(err) {

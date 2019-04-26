@@ -29,7 +29,7 @@ h1{
 	/*color: lightgray; idk why this doesnt change the color*/
 }
 
-.create{
+.createB{
 	margin-top: 16px;
 	margin-right: 20px;
 	padding: 5px;
@@ -37,7 +37,7 @@ h1{
 	background-color: rgb(254, 145, 36)
 }
 
-.log{
+.loginB{
 	display: inline;
 	margin-top: 20px;
 	margin-right: 7px;
@@ -63,14 +63,14 @@ body{
 	text-align: center;
 }
 
-.new {
+.form {
 	width: 400px;
 	background-color: gray;
 	margin: 20px auto;
 	padding: 40px;
 	border-radius: 8px;;
 }
-.new input, .new textarea, .new button, .new p{
+.form input, .form textarea, .form button, .form p{
 	display: block;
 	margin: 5px auto;
 	width: 200px;
@@ -87,7 +87,7 @@ textarea{
 	height: 150px;
 }
 
-.action{
+.editB{
 	display: flex;
 	justify-content: flex-end;
 }

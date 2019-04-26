@@ -1,7 +1,7 @@
 <%- include ../partials/header.ejs %>
 
 
-<form class="new" action="/posts/<%=post._id%>?_method=PUT" method="POST">
+<form class="form" action="/posts/<%=post._id%>?_method=PUT" method="POST">
 	<input type="text" name="title" placeholder="title*" value="<%=post.title%>" required><br>
 	<!-- <option></option> -->
 	<input type="text" name="image" placeholder="image URL" value="<%=post.image%>"><br>
