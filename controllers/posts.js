@@ -8,6 +8,7 @@ const Category = require('../models/category')
 router.get('/', async (req, res, next) => {
 	try{
 		const allPosts = await Post.find({});
+		console.log(allPosts);
 		res.render('posts/index.ejs', {
 			posts: allPosts,
 			session: req.session
