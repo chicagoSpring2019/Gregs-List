@@ -3,15 +3,17 @@
 <p class="text-danger"> <%= message %> </p>
 
 <form class="new" action="/users/register" method="POST">
-	<p>required*</p>
-  <input type="email" name="email" placeholder="email*">
-  <input type="text" name="phone" placeholder="phone number">
-  <input type="text" name="linkedin" placeholder="linkedin">
+	<p>Account Info</p>
   <input type="text" name="name" placeholder="username*">
   <input type="password" name="password" placeholder="password*">
+  <p>Contact Info</p>
+  <input type="email" name="email" placeholder="email*">
+  <input type="text" name="phone" placeholder="phone number(optional)">
+  <input type="text" name="linkedin" placeholder="linkedin(optional)">
+	<p>required field*</p>
   <button>Register</button>
 </form>
 
-<small>Already have an account? <a href="/users/login">Login here</a></small>
+<p>Already have an account? <a href="/users/login">Login here</a></p>
 
 <%- include ../partials/footer.ejs %>

@@ -70,7 +70,7 @@ body{
 	padding: 40px;
 	border-radius: 8px;;
 }
-.new input, textarea, button, p{
+.new input, textarea, button{
 	display: block;
 	margin: 5px auto;
 	width: 200px;
