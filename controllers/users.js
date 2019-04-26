@@ -114,6 +114,7 @@ router.delete('/:id', async (req, res, next) => {
   try{
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     const deletedUsersPosts = await Post.deleteMany({_id: {$in: deletedUser.posts}});
+    req.session.destroy();
     res.redirect('/posts')
   }  
   catch(err) {
@@ -127,6 +128,25 @@ router.get('/:id/edit', async (req, res, next) => {
   if(foundUser._id == req.session.userId){
     try {
       res.render('users/edit.ejs', {
+        user: foundUser,
+        session: req.session
+      });
+    }
+    catch(err) {
+      next(err);
+    }
+  }
+  else{
+    res.redirect('/users/' + req.params.id)
+  }
+});
+
+//shows profile delete page
+router.get('/:id/delete', async (req, res, next) => {
+  const foundUser = await User.findById(req.params.id);
+  if(foundUser._id == req.session.userId){
+    try {
+      res.render('users/delete.ejs', {
         user: foundUser,
         session: req.session
       });
