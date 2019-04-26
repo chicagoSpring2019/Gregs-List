@@ -3,14 +3,12 @@ const app            = express();
 const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
-const User           = require('./models/user')
 
 require('./db/db')
 
 //controllers
 const usersController  = require('./controllers/users');
 const postsController = require('./controllers/posts');
-//const categoriesController     = require('./controllers/categoriesController');
 
 //middleware
 app.use(express.static('public'));

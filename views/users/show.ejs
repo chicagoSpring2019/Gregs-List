@@ -2,10 +2,7 @@
 
 <%if(user._id == session.userId){%>
 	<header class="editB">
-		<form action="/users/<%=user.id%>?_method=DELETE" method="post" >	
-			<button>Delete User</button>
-		</form>
-		<a href="/users/<%=user.id%>/edit">Edit User</a>
+		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
 	</header>
 <%}%>
 <main>
