@@ -14,10 +14,12 @@ const postSchema = new mongoose.Schema({
 	},
 	location: String,
 	email: String,
-	category: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'category'
-	}],
+	category: String,
+
+	// [{
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'category'
+	// }],
 	date: {type: Date, defualt: Date.now}
 });
 

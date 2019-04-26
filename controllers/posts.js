@@ -22,7 +22,9 @@ router.get('/', async (req, res, next) => {
 router.get('/new', (req, res, next) => {
 	// ONLY Reachable if user id logged in
 	if(req.session.loggedIn === true) {
-		res.render('posts/new.ejs')
+		res.render('posts/new.ejs', {
+			session: req.session
+		})
 	} else {
 		req.session.message = "must be logged in to contribute";
 		res.redirect('/users/login')	

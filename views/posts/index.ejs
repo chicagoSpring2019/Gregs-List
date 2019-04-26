@@ -2,18 +2,18 @@
 
 	<main>
 		<% 
-		const jobs = [],
-		const meets = [],
-		const hires = [],
+		const jobs = [];
+		const meets = [];
+		const hires = [];
 		posts.forEach((post) => { 
-			if(post.category == 'job') {
+			if(post.category == 'Job') {
 				jobs.push(post)
-			} else if (post.category == 'meet') {
+			} else if (post.category == 'Meet') {
 				meets.push(post)
-			} else if (post.category == 'hire') {
+			} else if (post.category == 'Hire') {
 				hires.push(post)
 			}
-		}%>
+		})%>
 
 
 
@@ -28,7 +28,7 @@
 
 		<h2 class="category">Meet - ups</h2>
 		<ul class="categoryList">
-			<% jobs.forEach((post) => { %>
+			<% meets.forEach((post) => { %>
 				<li>
 					<a href="/posts/<%=post._id%>"><%=post.title%></a>
 				</li>
@@ -37,13 +37,13 @@
 
 		<h2 class="category">Job Candidates</h2>
 		<ul class="categoryList">
-			<% jobs.forEach((post) => { %>
+			<% hires.forEach((post) => { %>
 				<li>
 					<a href="/posts/<%=post._id%>"><%=post.title%></a>
 				</li>
 			<% }) %>
 		</ul>
 
-		
+
 	</main>
 <%- include ../partials/footer.ejs %>
