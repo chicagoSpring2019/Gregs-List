@@ -1,13 +1,14 @@
 <%- include ../partials/header.ejs %>
 
-<form action="/users/login" method="POST">
+<p class="text-danger"> <%= message %> </p>
+<form class="new" action="/users/login" method="POST">
   <input type="text" name="name" placeholder="username">
   <input type="password" name="password" placeholder="password">
 
   <button>Login</button>
 </form>
-
-<small>Register here<a href="/users/register">Sign up here!</a></small>
-
+<section class="register">
+<p>Want to make an account? <a href="/users/register">Sign up here!</a></p>
+</section>
 
 <%- include ../partials/footer.ejs %>

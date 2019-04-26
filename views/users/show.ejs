@@ -1,23 +1,25 @@
 <%- include ../partials/header.ejs %>
 
-<h1> <%= user.name %> </h1>
-
-<h2> <%= user.name%>'s Posts</h2>
-
-<ul>
-
-<% posts.forEach((post, i) => { %>
-	<li>
-		<a href="/posts/<%= post.id %>"> <%= post.title %> </a>
-	</li>
-
-<% }) %>
-
-</ul>
-
-<form action="/users/<%=user.id%>?_method=DELETE" method="post" >
-	
-	<button>Delete User</button>
-</form>
-
-<a href="/users/<%=user.id%>/edit">EDIT USER</a>
+<header>
+	<form action="/users/<%=user.id%>?_method=DELETE" method="post" >	
+		<button>Delete User</button>
+	</form>
+	<a href="/users/<%=user.id%>/edit">Edit User</a>
+</header>
+<main>
+	<h1><%=user.name%></h1>
+	<p><%=user.description%></p>
+	<p><%=user.email%></p>
+	<p><%=user.phone%></p>
+	<p><%=user.linkedin%></p>
+</main>
+<section>
+	<h2><%=user.name%>'s Posts</h2>
+	<ul>
+		<%posts.forEach((post) => {%>
+			<li>
+				<a href="/posts/<%= post.id %>"><%=post.title%></a>
+			</li>
+		<%})%>
+	</ul>
+</section>
