@@ -1,5 +1,6 @@
 <%- include ../partials/header.ejs %>
 
+
 <form class="new" action="/posts/<%=post._id%>?_method=PUT" method="POST">
 	Title: <input type="text" name="title" value="<%=post.title%>" required><br>
 	<!-- <option></option> -->
