@@ -33,6 +33,24 @@ router.get('/new', (req, res, next) => {
 	}
 })
 
+router.get('/hire', (req, res, next) => {
+	res.render('categories/newHire.ejs', {
+		session: req.session
+	})
+})
+
+router.get('/job', (req, res, next) => {
+	res.render('categories/newJob.ejs', {
+		session: req.session
+	})
+})
+
+router.get('/meet', (req, res, next) => {
+	res.render('categories/newMeet.ejs', {
+		session: req.session
+	})
+})
+
 // ROUTE TO POST NEW POSTS
 router.post('/', async (req, res, next) => { 
 	try {

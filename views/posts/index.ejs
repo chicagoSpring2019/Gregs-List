@@ -1,22 +1,20 @@
 <%- include ../partials/header.ejs %>
 
+	<% 
+	const jobs = [];
+	const meets = [];
+	const hires = [];
+	posts.forEach((post) => { 
+		if(post.category == 'Job') {
+			jobs.push(post)
+		} else if (post.category == 'Meet') {
+			meets.push(post)
+		} else if (post.category == 'Hire') {
+			hires.push(post)
+		}
+	})%>
+	
 	<main>
-		<% 
-		const jobs = [];
-		const meets = [];
-		const hires = [];
-		posts.forEach((post) => { 
-			if(post.category == 'Job') {
-				jobs.push(post)
-			} else if (post.category == 'Meet') {
-				meets.push(post)
-			} else if (post.category == 'Hire') {
-				hires.push(post)
-			}
-		})%>
-
-
-
 		<h2 class="category">Jobs</h2>
 		<ul class="categoryList">
 			<% jobs.forEach((post) => { %>
@@ -43,7 +41,6 @@
 				</li>
 			<% }) %>
 		</ul>
-
 
 	</main>
 <%- include ../partials/footer.ejs %>
