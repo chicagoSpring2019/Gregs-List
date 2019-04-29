@@ -14,10 +14,17 @@ const userSchema = new mongoose.Schema({
 	description: String,
 	email: {
 		type: String, 
-		required:true
+		required: true,
+		unique: true
 	},
-	phone: Number,
-	linkedin: String,
+	phone: {
+		type: Number, 
+		unique: true
+	},
+	linkedin: {
+		type: String, 
+		unique: true
+	},
 	posts:[{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Post'

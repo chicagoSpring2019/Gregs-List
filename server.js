@@ -9,7 +9,6 @@ require('./db/db')
 //controllers
 const usersController  = require('./controllers/users');
 const postsController = require('./controllers/posts');
-const messagesController = require('./controllers/messages');
 
 //middleware
 app.use(express.static('public'));
@@ -28,7 +27,6 @@ app.get('/', (req, res) => {
 //controllers
 app.use('/users', usersController);
 app.use('/posts', postsController);
-app.use('/messages', messagesController);
 
 //listener
 app.listen(3000, () => {
