@@ -1,8 +1,7 @@
 <%- include ../partials/header.ejs %>
 
-<h2>Create a Hire</h2>
-
-<form class="form" action="/posts/<%=post._id%>?_method=PUT" method="POST">
+<form class="form m-3" action="/posts/<%=post._id%>?_method=PUT" method="POST">
+	<h2>Create a Hire</h2>
 	<input type="hidden" name="category" value="Hire">
 	<input type="text" name="title" placeholder="Your Name*" value="<%=post.title%>" required><br>
 	<textarea name="description" placeholder="description*" required><%=post.description%></textarea><br>

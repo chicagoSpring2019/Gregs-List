@@ -15,29 +15,39 @@
 	})%>
 	
 	<main>
-		<h2 class="category">Jobs</h2>
-		<ul class="categoryList">
-			<% jobs.forEach((post) => { %>
-				<li>
-					<a href="/posts/<%=post._id%>"><%=post.title%></a>
-				</li>
-			<% }) %>
-		</ul>
-		<h2 class="category">Meet - ups</h2>
-		<ul class="categoryList">
-			<% meets.forEach((post) => { %>
-				<li>
-					<a href="/posts/<%=post._id%>"><%=post.title%></a>
-				</li>
-			<% }) %>
-		</ul>
-		<h2 class="category">Job Candidates</h2>
-		<ul class="categoryList">
-			<% hires.forEach((post) => { %>
-				<li>
-					<a href="/posts/<%=post._id%>"><%=post.title%></a>
-				</li>
-			<% }) %>
-		</ul>
+		<div class="container">
+  			<div class="row">
+    			<div class="col m-4 bg-light">
+					<h4>Jobs</h4>
+					<ul class="list-group list-group-flush">
+						<% jobs.forEach((post) => { %>
+							<li>
+								<a href="/posts/<%=post._id%>"><%=post.title%></a>
+							</li>
+						<% }) %>
+					</ul>
+				</div>
+				<div class="col m-4 bg-light">
+					<h4>Meet - ups</h4>
+					<ul class="list-group list-group-flush">
+						<% meets.forEach((post) => { %>
+							<li>
+								<a href="/posts/<%=post._id%>"><%=post.title%></a>
+							</li>
+						<% }) %>
+					</ul>
+				</div>
+				<div class="col m-4 bg-light">
+					<h4>Job Candidates</h4>
+					<ul class="list-group list-group-flush">
+						<% hires.forEach((post) => { %>
+							<li>
+								<a href="/posts/<%=post._id%>"><%=post.title%></a>
+							</li>
+						<% }) %>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</main>	
 <%- include ../partials/footer.ejs %>
