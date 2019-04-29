@@ -9,7 +9,7 @@ img {
 .footer	{
 	text-align: center;
 	margin: 0 auto;
-	position:absolute;
+	position: relative;
    	bottom:0;
    	width:100%;
 

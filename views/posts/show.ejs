@@ -8,21 +8,28 @@
 			</form>
 		</header>
 	<%}%>
-	<main>
-		<h1><%=post.title%></h1>
+	<main class="m-5">
+		<h2><%=post.title%></h2>
 		<img src="<%=post.image%>">
-		<p><%=post.description%></p>
-		<p><%=post.email%></p>
-		<p><%=post.location%></p>
-		<p><%=post.time.toLocaleString()%></p>
-		Date Posted: <p><%=post.date.toDateString()%></p>
-
-
+		<p>
+			Info:	<%=post.description%>
+		</p>
+		<br>
+		<br>
+		<small>
+			<%if(post.email != ''){%>
+				Email: <p><%=post.email%></p>
+			<%}%>
+			<%if(post.location != ''){%>
+				Location: <p><%=post.location%></p>
+			<%}%>
+			Date Posted: <p><%=post.date.toDateString()%></p>
+			<br>
+			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
+		</small>
 		<form action="/posts/<%=post._id%>?_method=PUT" method="POST">
 			<button>Going to <%= post.title%></button>
 		</form>
 		<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
-
 	</main>
-	User: <a href="/users/<%= user._id %>"><%= user.name %></a>
 <%- include ../partials/footer.ejs %>
