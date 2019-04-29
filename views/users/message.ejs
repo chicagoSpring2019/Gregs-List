@@ -1,0 +1,17 @@
+<%- include ../partials/header.ejs %>
+
+<form class="form" action="/messages" method="POST">
+	<select name="service">
+		<option value="gmail">Gmail</option>
+		<option value="outlook">Outlook</option>
+		<option value="yahoo">Yahoo</option>
+	</select><br>
+	<input type="text" name="fromEmail" value="<%=from.email%>"><br>
+	<input type="password" name="password" placeholder="email account password"><br>
+	<input type="text" name="toEmail" value="<%=to.email%>"><br>
+	<input type="text" name="subject" placeholder="email subject"><br>
+	<textarea name="text" placeholder="email body"></textarea><br>
+	<button>Send Email</button>
+</form>
+
+<%- include ../partials/footer.ejs %>

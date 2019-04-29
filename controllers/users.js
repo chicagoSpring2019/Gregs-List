@@ -109,6 +109,27 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get('/:id/message', async (req, res, next) => {
+  if(req.session.loggedIn === true) {
+    try{
+      const foundUser = await User.findById(req.params.id)
+      const foundYou = await User.findById(req.session.userId)
+      res.render('users/message.ejs', {
+        session: req.session,
+        from: foundYou,
+        to: foundUser
+      })
+    }
+    catch(err){
+      next(err)
+    }
+  }
+  else{
+    req.session.message = "must be logged in to message";
+    res.redirect('/users/login')
+  }
+})
+
 //deletes user and all posts
 router.delete('/:id', async (req, res, next) => {
   try{

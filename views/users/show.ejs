@@ -10,6 +10,7 @@
 	<h2>Contact Info</h2>
 	<p><%=user.description%></p>
 	<p><%=user.email%></p>
+	<a href="/users/<%=user.id%>/message">Email: <%=user.name%>%></a>
 	<p><%=user.phone%></p>
 	<%if(user.linkedin.length > 0){%>
 		<a href="<%=user.linkedin%>">LinkedIn Account</a>

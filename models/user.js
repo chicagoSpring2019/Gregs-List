@@ -12,7 +12,10 @@ const userSchema = new mongoose.Schema({
 		required: true
 	},
 	description: String,
-	email: String,
+	email: {
+		type: String, 
+		required:true
+	},
 	phone: Number,
 	linkedin: String,
 	posts:[{
