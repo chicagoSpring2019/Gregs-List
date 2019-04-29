@@ -1,9 +1,11 @@
 <%- include ../partials/header.ejs %>
 
-<ul class="categoryList">
-	<% users.forEach((user) => { %>
+<h1>These People Are Attending</h1>
+<ul>
+	<% users.forEach((user) => { 
+		if(user.id)%>
 		<li>
-			<a href=""><%=user.name%></a>
+			<a href="/users/<%=user._id%>"><%=user.name%></a>
 		</li>
 	<% }) %>
 </ul>

@@ -11,7 +11,7 @@
 	<h2>Contact Info</h2>
 	<p><%=user.description%></p>
 	<p><%=user.email%></p>
-	<a href="/users/<%=user.id%>/message">Email: <%=user.name%>%></a>
+	<a href="/users/<%=user.id%>/message">Send Email to <%=user.name%>%></a>
 	<p><%=user.phone%></p>
 	<%if(user.linkedin.length > 0){%>
 		<a href="<%=user.linkedin%>">LinkedIn Account</a>
@@ -20,18 +20,54 @@
 <section>
 	<h2><%=user.name%>'s Posts</h2>
 
-	<%for(let i = 0; i < posts.length; i++){%>
-		<%if(posts[i].category === 'Job'){%>
+	<% 
+	const jobs = [];
+	const meets = [];
+	const hires = [];
+	posts.forEach((post) => { 
+		if(post.category === 'Job') {
+			jobs.push(post)
+		} else if (post.category === 'Meet') {
+			meets.push(post)
+		} else if (post.category === 'Hire') {
+			hires.push(post)
+		}
+	})%>
+
+		<%if(jobs.length > 0){ %>
 			<h3>Job Listings</h3>
-			<a href="/posts/<%=posts[i].id%>"><%=posts[i].title%></a>
-
-		<%}else if(posts[i].category === 'Hire'){%>
-			<h3>Hires</h3>
-			<a href="/posts/<%=posts[i].id%>"><%=posts[i].title%></a>
-
-		<%}else if(posts[i].category === 'Meet'){%>
-			<h3>Meet-Ups</h3>
-			<a href="/posts/<%=posts[i].id%>"><%=posts[i].title%></a>
+			<%jobs.forEach((post) => {%>
+				<ul>
+					<li>
+						<a href="/posts/<%=post.id%>"><%=post.title%></a>
+					</li>
+				</ul>
+			<%})%>
 		<%}%>
-	<%}%>
+
+		<%if(hires.length > 0){ %>
+			<h3>Hires</h3>
+			<%hires.forEach((post) => {%>
+				<ul>
+					<li>
+						<a href="/posts/<%=post.id%>"><%=post.title%></a>
+					</li>
+				</ul>
+			<%})%>
+		<%}%>
+
+		<%if(meets.length > 0){ %>		
+			<h3>Meet-Ups</h3>
+			<%meets.forEach((post) => {%>
+				<ul>
+					<li>
+						<a href="/posts/<%=post.id%>"><%=post.title%></a>
+					</li>
+				</ul>
+			<%})%>
+		<%}%>
+	</ul>
+
+
+	
 </section>

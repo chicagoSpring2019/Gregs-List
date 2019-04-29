@@ -19,7 +19,6 @@
 
 
 		<form action="/posts/<%=post._id%>?_method=PUT" method="POST">
-		  <input type="hidden" name="attendance" value="<%=you._id%>">
 			<button>Going to <%= post.title%></button>
 		</form>
 		<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
