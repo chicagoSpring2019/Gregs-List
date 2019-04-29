@@ -3,6 +3,7 @@ const router = express.Router();
 const Post = require('../models/post')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const nodemailer = require('nodemailer')
 
 ///////////////// AUTH //////////////
 //show login page
@@ -111,15 +112,14 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+// route to user email message page
 router.get('/:id/message', async (req, res, next) => {
   if(req.session.loggedIn === true) {
     try{
       const foundUser = await User.findById(req.params.id)
-      const foundYou = await User.findById(req.session.userId)
       res.render('users/message.ejs', {
         session: req.session,
-        from: foundYou,
-        to: foundUser
+        user: foundUser
       })
     }
     catch(err){
@@ -129,6 +129,32 @@ router.get('/:id/message', async (req, res, next) => {
   else{
     req.session.message = "must be logged in to message";
     res.redirect('/users/login')
+  }
+})
+
+//route to send email
+router.post('/messages', async (req, res, next) => {
+  try{
+    const foundYou = await User.findById(req.session.userId)
+    const foundUser = await User.findOne({'email': req.body.toEmail})
+    let transporter = await nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'gregsListAuto@gmail.com',
+        pass: 'pa$$w0rd!'
+      }
+    });
+    let info = await transporter.sendMail({
+      from: 'gregsListAuto@gmail.com',
+      to: req.body.toEmail,
+      subject: req.body.subject + ` sent from ${foundYou.name}`,
+      text: req.body.text
+    });
+    req.session.message = "Email sent"
+    res.redirect('/users/' + foundUser._id)
+  }
+  catch(err){
+    next(err)
   }
 })
 
@@ -153,10 +179,13 @@ router.get('/:id/edit', async (req, res, next) => {
     const foundUser = await User.findById(req.params.id);
     if (foundUser._id == req.session.userId) {
         try {
-            res.render('users/edit.ejs', {
-                user: foundUser,
-                session: req.session
-            });
+          const msg = req.session.message
+          req.session.message = ''
+          res.render('users/edit.ejs', {
+            user: foundUser,
+            session: req.session,
+            msg: message
+          });
         } catch (err) {
             next(err);
         }
