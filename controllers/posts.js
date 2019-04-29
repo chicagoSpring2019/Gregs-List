@@ -33,18 +33,17 @@ router.get('/new', (req, res, next) => {
 	}
 })
 
+//routes for categories
 router.get('/hire', (req, res, next) => {
 	res.render('categories/newHire.ejs', {
 		session: req.session
 	})
 })
-
 router.get('/job', (req, res, next) => {
 	res.render('categories/newJob.ejs', {
 		session: req.session
 	})
 })
-
 router.get('/meet', (req, res, next) => {
 	res.render('categories/newMeet.ejs', {
 		session: req.session
@@ -62,6 +61,7 @@ router.post('/', async (req, res, next) => {
 		postDbEntry.location = req.body.location
 		postDbEntry.email = req.body.email
 		postDbEntry.category = req.body.category
+		postDbEntry.time = req.body.time
 		postDbEntry.date = Date.now();
 		const createdPost = await Post.create(postDbEntry);
 		foundUser.posts.push(createdPost);

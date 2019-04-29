@@ -1,7 +1,5 @@
 <%- include ../partials/header.ejs %>
 
-
-
 <h3>Are you sure you want to delete this user account?</h3>
 
 <form action="/users/<%=user.id%>?_method=DELETE" method="post" >	
@@ -9,7 +7,5 @@
 </form>
 
 <a href="/users/<%=user.id%>/edit">Back to EDIT</a>
-
-
 
 <%- include ../partials/footer.ejs %>

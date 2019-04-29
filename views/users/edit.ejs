@@ -1,9 +1,11 @@
 <%- include ../partials/header.ejs %>
 
+<h2>Edit <%=user.username%>'s Profile</h2>
+
 <form class="form" action="/users/<%=user._id%>?_method=PUT" method="POST">
-  <input type="email" name="email" placeholder="email*" value="<%=user.email%>" required>
-  <input type="text" name="phone" placeholder="phone" value="<%=user.phone%>">
-  <input type="text" name="linkedin" placeholder="LinkedIn" value="<%=user.linkedin%>">
+  <input type="email" name="email" placeholder="email*" value="<%=user.email%>" required><br>
+  <input type="text" name="phone" placeholder="phone" value="<%=user.phone%>"><br>
+  <input type="text" name="linkedin" placeholder="LinkedIn" value="<%=user.linkedin%>"><br>
   <button>Update</button>
 </form>
 
