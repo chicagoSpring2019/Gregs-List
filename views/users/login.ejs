@@ -1,9 +1,10 @@
 <%- include ../partials/header.ejs %>
 
 <p class="text-danger"> <%= message %> </p>
+
 <form class="form" action="/users/login" method="POST">
-  <input type="text" name="name" placeholder="username">
-  <input type="password" name="password" placeholder="password">
+  <input type="text" name="name" placeholder="username" required><br>
+  <input type="password" name="password" placeholder="password" required><br>
   <button>Login</button>
 </form>
 

@@ -13,12 +13,11 @@ const userSchema = new mongoose.Schema({
 	},
 	description: String,
 	email: {
-		type: String,
-		required: true
+		type: String, 
+		required:true
 	},
 	phone: Number,
 	linkedin: String,
-	admin: Boolean,
 	posts:[{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Post'

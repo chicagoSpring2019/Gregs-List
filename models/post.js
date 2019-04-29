@@ -13,8 +13,15 @@ const postSchema = new mongoose.Schema({
 	},
 	location: String,
 	email: String,
-	category: String,
-	date: {type: Date, defualt: Date.now}
+	category: {
+		type: String, 
+		required: true
+	},
+	date: {
+		type: Date, 
+		required: true
+	},
+	time: Date
 });
 
 const Post = mongoose.model('Post', postSchema);

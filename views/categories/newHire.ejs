@@ -1,0 +1,15 @@
+<%- include ../partials/header.ejs %>
+
+<h2>Create a Hire</h2>
+
+<form class="form" action="/posts" method="POST">
+	<input type="hidden" name="category" value="Hire">
+	<input type="text" name="title" placeholder="Your Name*" required><br>
+	<textarea name="description" placeholder="description*" required></textarea><br>
+	<input type="text" name="image" placeholder="Resume URL"><br>
+	<input type="text" name="email" placeholder="email*" required><br>
+	<p>required field*</p>
+	<button>Create Post</button>
+</form>
+
+<%- include ../partials/footer.ejs %>

@@ -1,4 +1,5 @@
 <%- include ../partials/header.ejs %>
+
 	<%if(user._id == session.userId){ %>
 		<header class="editB">
 			<a href="/posts/<%=post._id%>/edit">Edit Post</a>
@@ -11,12 +12,10 @@
 		<h1><%=post.title%></h1>
 		<img src="<%=post.image%>">
 		<p><%=post.description%></p>
-		<% if (post.email !== '') {%>
-			<p>Post Email: <%=post.email%> </p>
-		<%}%>
-		<% if (post.location !== '') {%>
-			<p>Location: <%=post.location%> </p>
-		<%}%>
+		<p><%=post.email%></p>
+		<p><%=post.location%></p>
+		<p><%=post.time%></p>
+		Date Posted: <p><%=post.date.toDateString()%></p>
 	</main>
-	Poster: <a href="/users/<%= user._id %>"> <%= user.name %></a>
+	User: <a href="/users/<%= user._id %>"><%= user.name %></a>
 <%- include ../partials/footer.ejs %>

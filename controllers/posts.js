@@ -5,15 +5,20 @@ const User = require('../models/user')
 
 // MAIN PAGE - Lists all the main posts
 router.get('/', async (req, res, next) => {
-    try {
-        const allPosts = await Post.find({});
-        res.render('posts/index.ejs', {
-            posts: allPosts,
-            session: req.session
-        })
-    } catch (err) {
-        next(err)
-    }
+
+	try{
+		const allPosts = await Post.find({});
+		allPosts.sort(function(a,b){
+  			return new Date(b.date) - new Date(a.date);
+		});
+		res.render('posts/index.ejs', {
+			posts: allPosts,
+			session: req.session
+		})
+	}
+	catch(err){
+		next(err)
+	}
 })
 
 // ROUTE TO THE POST CREATION PAGE
@@ -29,65 +34,97 @@ router.get('/new', (req, res, next) => {
     }
 })
 
+//routes for categories
+router.get('/hire', (req, res, next) => {
+	res.render('categories/newHire.ejs', {
+		session: req.session
+	})
+})
+router.get('/job', (req, res, next) => {
+	res.render('categories/newJob.ejs', {
+		session: req.session
+	})
+})
+router.get('/meet', (req, res, next) => {
+	res.render('categories/newMeet.ejs', {
+		session: req.session
+	})
+})
+
 // ROUTE TO POST NEW POSTS
-router.post('/', async (req, res, next) => {
-    try {
-        const foundUser = await User.findById(req.session.userId);
-        const createdPost = await Post.create(req.body);
-        foundUser.posts.push(createdPost);
-        foundUser.save()
-        res.redirect('/posts')
-    } catch (err) {
-        next(err)
-    }
+
+router.post('/', async (req, res, next) => { 
+	try {
+		const foundUser = await User.findById(req.session.userId);
+		const postDbEntry = {};
+		postDbEntry.title = req.body.title
+		postDbEntry.image = req.body.image
+		postDbEntry.description = req.body.description
+		postDbEntry.location = req.body.location
+		postDbEntry.email = req.body.email
+		postDbEntry.category = req.body.category
+		postDbEntry.time = req.body.time
+		postDbEntry.date = Date.now();
+		const createdPost = await Post.create(postDbEntry);
+		foundUser.posts.push(createdPost);
+		foundUser.save()
+		res.redirect('/posts')
+	}
+	catch(err) {
+		next(err)
+	}
 })
 
 // SHOW PAGE FOR POSTS
 router.get('/:id', async (req, res, next) => {
-    try {
-        // Returns one post from the specified user, 
-        // that matches the parameters and puts it in an array.
-        const foundUser = await User.findOne({
-                'posts': req.params.id
-            })
-            .populate({
-                path: 'posts',
-                match: {
-                    _id: req.params.id
-                }
-            })
-        console.log("\nfoundUser");
-        console.log(foundUser);
-        res.render('posts/show.ejs', {
-            post: foundUser.posts[0],
-            user: foundUser,
-            session: req.session
-        })
-    } catch (err) {
-        next(err)
-    }
+	try{
+		// Returns one post from the specified user, 
+		// that matches the parameters and puts it in an array.
+		const foundUser = await User.findOne({'posts': req.params.id})
+		.populate({path: 'posts', match: {_id: req.params.id}})
+		res.render('posts/show.ejs', {
+			post: foundUser.posts[0],
+			user: foundUser,
+			session: req.session
+		})
+	}
+	catch(err){
+		next(err)
+	}
 })
 
 // ROUTE to the post edit page
 router.get('/:id/edit', async (req, res, next) => {
-    const foundUser = await User.findOne({
-        'posts': req.params.id
-    })
-    if (foundUser._id == req.session.userId) {
-        try {
-            const foundPost = await Post.findOne({
-                _id: req.params.id
-            })
-            res.render('posts/edit.ejs', {
-                post: foundPost,
-                session: req.session
-            })
-        } catch (err) {
-            next(err)
-        }
-    } else {
-        res.redirect('/posts/' + req.params.id)
-    }
+	const foundUser = await User.findOne({'posts': req.params.id})
+	if(foundUser._id == req.session.userId){
+		try{
+			const foundPost = await Post.findOne({_id: req.params.id})
+			if(foundPost.category === 'Hire'){
+				res.render('categories/editHire.ejs', {
+					post: foundPost,
+					session: req.session
+				})
+			}
+			else if(foundPost.category === 'Job'){
+				res.render('categories/editJob.ejs', {
+					post: foundPost,
+					session: req.session
+				})
+			}
+			else if(foundPost.category === 'Meet'){
+				res.render('categories/editMeet.ejs', {
+					post: foundPost,
+					session: req.session
+				})
+			}
+		}
+		catch(err){
+			next(err)
+		}
+	}
+	else{
+		res.redirect('/posts/' + req.params.id)
+	}
 })
 
 // ROUTE for updating posts
