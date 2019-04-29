@@ -21,7 +21,11 @@ const postSchema = new mongoose.Schema({
 		type: Date, 
 		required: true
 	},
-	time: Date
+	time: Date,
+	attendance: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}]
 });
 
 const Post = mongoose.model('Post', postSchema);

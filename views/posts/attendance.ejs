@@ -1,0 +1,11 @@
+<%- include ../partials/header.ejs %>
+
+<ul class="categoryList">
+	<% users.forEach((user) => { %>
+		<li>
+			<a href=""><%=user.name%></a>
+		</li>
+	<% }) %>
+</ul>
+
+<%- include ../partials/footer.ejs %>

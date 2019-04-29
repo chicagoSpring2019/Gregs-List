@@ -81,10 +81,26 @@ router.get('/:id', async (req, res, next) => {
 		// Returns one post from the specified user, 
 		// that matches the parameters and puts it in an array.
 		const foundUser = await User.findOne({'posts': req.params.id})
-		.populate({path: 'posts', match: {_id: req.params.id}})
+		.populate({path: 'posts', match: {_id: req.params.id}});
+		const foundYou = await User.findById(req.session.userId);
 		res.render('posts/show.ejs', {
 			post: foundUser.posts[0],
 			user: foundUser,
+			session: req.session,
+			you: foundYou
+		})
+	}
+	catch(err){
+		next(err)
+	}
+})
+
+//route for users attending an event
+router.get('/:id/attendance', async (req, res, next) => {
+	try{
+		const foundPost = await Post.findById(req.params.id)
+		res.render('posts/attendance.ejs', {
+			users: foundPost.attendance,
 			session: req.session
 		})
 	}
@@ -129,14 +145,16 @@ router.get('/:id/edit', async (req, res, next) => {
 
 // ROUTE for updating posts
 router.put('/:id', async (req, res, next) => {
-    try {
-        const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
-        });
-        res.redirect('/posts/' + req.params.id)
-    } catch (err) {
-        next(err)
-    }
+  try {
+  	const foundPost = await Post.findById(req.params.id);
+  	foundPost.attendance.push(req.body.attendance);
+  	foundPost.save();
+    const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    console.log(foundPost.attendance);
+    res.redirect('/posts/' + req.params.id)
+  } catch (err) {
+    next(err)
+  }
 })
 
 // DELETE ROUTE for posts

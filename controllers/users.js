@@ -110,6 +110,7 @@ router.get('/logout', (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const foundUser = await User.findById(req.params.id).populate('posts')
+        console.log(foundUser);
         const msg = req.session.message
         req.session.message = ''
         res.render('users/show.ejs', {

@@ -14,8 +14,16 @@
 		<p><%=post.description%></p>
 		<p><%=post.email%></p>
 		<p><%=post.location%></p>
-		<p><%=post.time%></p>
+		<p><%=post.time.toLocaleString()%></p>
 		Date Posted: <p><%=post.date.toDateString()%></p>
+
+
+		<form action="/posts/<%=post._id%>?_method=PUT" method="POST">
+		  <input type="hidden" name="attendance" value="<%=you._id%>">
+			<button>Going to <%= post.title%></button>
+		</form>
+		<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
+
 	</main>
 	User: <a href="/users/<%= user._id %>"><%= user.name %></a>
 <%- include ../partials/footer.ejs %>
