@@ -11,9 +11,12 @@
 		<h1><%=post.title%></h1>
 		<img src="<%=post.image%>">
 		<p><%=post.description%></p>
-		<p><%=post.email%></p>
-		<p><%=post.location%></p>
+		<% if (post.email !== '') {%>
+			<p>Post Email: <%=post.email%> </p>
+		<%}%>
+		<% if (post.location !== '') {%>
+			<p>Location: <%=post.location%> </p>
+		<%}%>
 	</main>
-	<a href="/users/<%= user._id %>"> Poster:<%= user.name %></a>
-
+	Poster: <a href="/users/<%= user._id %>"> <%= user.name %></a>
 <%- include ../partials/footer.ejs %>

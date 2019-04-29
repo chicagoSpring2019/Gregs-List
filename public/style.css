@@ -104,3 +104,7 @@ img {
 	text-align: center;
 	margin: 0 auto;
 };
+
+div {
+	font-family: 'Fira Sans', sans-serif;
+}
