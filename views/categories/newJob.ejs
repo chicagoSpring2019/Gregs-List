@@ -1,6 +1,7 @@
 <%- include ../partials/header.ejs %>
 
 <h2>Create a Job Listing</h2>
+
 <form class="form" action="/posts" method="POST">
 	<input type="hidden" name="category" value="Job">
 	<input type="text" name="title" placeholder="Position*" required><br>
@@ -9,4 +10,5 @@
 	<input type="text" name="email" placeholder="email*" required><br>
 	<button>Create Post</button>
 </form>
+
 <%- include ../partials/footer.ejs %>

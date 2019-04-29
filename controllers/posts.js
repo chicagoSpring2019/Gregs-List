@@ -80,8 +80,6 @@ router.get('/:id', async (req, res, next) => {
 		// that matches the parameters and puts it in an array.
 		const foundUser = await User.findOne({'posts': req.params.id})
 		.populate({path: 'posts', match: {_id: req.params.id}})
-		console.log("\nfoundUser");
-		console.log(foundUser);
 		res.render('posts/show.ejs', {
 			post: foundUser.posts[0],
 			user: foundUser,
@@ -99,10 +97,24 @@ router.get('/:id/edit', async (req, res, next) => {
 	if(foundUser._id == req.session.userId){
 		try{
 			const foundPost = await Post.findOne({_id: req.params.id})
-			res.render('posts/edit.ejs', {
-				post: foundPost,
-				session: req.session
-			})
+			if(foundPost.category === 'Hire'){
+				res.render('categories/editHire.ejs', {
+					post: foundPost,
+					session: req.session
+				})
+			}
+			else if(foundPost.category === 'Job'){
+				res.render('categories/editJob.ejs', {
+					post: foundPost,
+					session: req.session
+				})
+			}
+			else if(foundPost.category === 'Meet'){
+				res.render('categories/editMeet.ejs', {
+					post: foundPost,
+					session: req.session
+				})
+			}
 		}
 		catch(err){
 			next(err)

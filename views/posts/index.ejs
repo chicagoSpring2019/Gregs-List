@@ -5,11 +5,11 @@
 	const meets = [];
 	const hires = [];
 	posts.forEach((post) => { 
-		if(post.category == 'Job') {
+		if(post.category === 'Job') {
 			jobs.push(post)
-		} else if (post.category == 'Meet') {
+		} else if (post.category === 'Meet') {
 			meets.push(post)
-		} else if (post.category == 'Hire') {
+		} else if (post.category === 'Hire') {
 			hires.push(post)
 		}
 	})%>

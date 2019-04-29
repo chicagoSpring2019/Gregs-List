@@ -4,11 +4,9 @@
   <input type="email" name="email" placeholder="email*" value="<%=user.email%>" required>
   <input type="text" name="phone" placeholder="phone" value="<%=user.phone%>">
   <input type="text" name="linkedin" placeholder="LinkedIn" value="<%=user.linkedin%>">
-
   <button>Update</button>
 </form>
 
 <a href="/users/<%=user.id%>/delete">Delete this User</a>
-
 
 <%- include ../partials/footer.ejs %>
