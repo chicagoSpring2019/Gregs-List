@@ -2,12 +2,34 @@
 
 <p class="text-danger"> <%= message %> </p>
 
-<form class="form" action="/users/login" method="POST">
+<!-- <form class="form" action="/users/login" method="POST">
   <input type="text" name="name" placeholder="username" required><br>
   <input type="password" name="password" placeholder="password" required><br>
   <button>Login</button>
+</form> -->
+
+<form class="form m-5" action="/users/login" method="POST">
+	<div class="form-row">
+    	<div class="col">
+  			<div class="form-group">
+    			<label for="exampleFormControlInput1">Username</label>
+    			<input type="text" class="form-control" id="usernameLoginInput" placeholder="Your username" required>
+  			</div>
+  		</div>
+  	</div>
+	<div class="form-row">
+		<div class="col">
+			<div class="form-group">
+    			<label for="exampleFormControlInput1">Password</label>
+    			<input type="text" class="form-control" id="passwordLoginInput" placeholder="Your password" required>
+    		</div>
+    	</div>
+  	</div>
+   	<button>Login</button>
 </form>
 
-<p>Want to make an account? <a href="/users/register">Sign up here!</a></p>
+
+<p class="m-5">Want to make an account? <a href="/users/register">Sign up here!</a></p>
 
 <%- include ../partials/footer.ejs %>
+
