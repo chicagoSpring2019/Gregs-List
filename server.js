@@ -23,7 +23,7 @@ app.use(session({
 app.get('/', (req, res) => {
 	res.redirect('/posts')
 })
-
+ 
 //controllers
 app.use('/users', usersController);
 app.use('/posts', postsController);
