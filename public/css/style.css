@@ -9,8 +9,38 @@ img {
 .footer	{
 	text-align: center;
 	margin: 0 auto;
+	position:absolute;
+   	bottom:0;
+   	width:100%;
+
 };
 
 body {
 	font-family: 'Fira Sans', sans-serif;
+}
+
+ul	{
+	list-style: none;
+}
+
+input	{
+	min-width: 320px;
+	margin: 6px;
+}
+
+textarea {
+	min-width: 320px;
+	margin: 6px;
+}
+
+button {
+	margin: 6px;
+}
+
+a {
+	margin: 6px;
+}
+
+p {
+	margin: 6px;
 }

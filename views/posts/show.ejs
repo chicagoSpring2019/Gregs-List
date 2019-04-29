@@ -1,7 +1,7 @@
 <%- include ../partials/header.ejs %>
 
 	<%if(user._id == session.userId){ %>
-		<header class="editB">
+		<header class="m-4">
 			<a href="/posts/<%=post._id%>/edit">Edit Post</a>
 			<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
 				<button class="delete">Delete Post</button>

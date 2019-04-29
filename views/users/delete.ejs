@@ -1,11 +1,11 @@
 <%- include ../partials/header.ejs %>
 
-<h3>Are you sure you want to delete this user account?</h3>
-
-<form action="/users/<%=user.id%>?_method=DELETE" method="post" >	
+<form class="m-3" action="/users/<%=user.id%>?_method=DELETE" method="post" >
+	<h4>Are you sure you want to delete this user account?</h4>
 	<button>Confirm Deletion</button>
+	<br>
+	<br>
+	<a href="/users/<%=user.id%>/edit">Back to EDIT</a>
 </form>
-
-<a href="/users/<%=user.id%>/edit">Back to EDIT</a>
 
 <%- include ../partials/footer.ejs %>

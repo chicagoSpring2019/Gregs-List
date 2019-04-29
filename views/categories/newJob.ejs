@@ -1,8 +1,8 @@
 <%- include ../partials/header.ejs %>
 
-<h2>Create a Job Listing</h2>
 
-<form class="form" action="/posts" method="POST">
+<form class="form m-3" action="/posts" method="POST">
+	<h2>Create a Job Listing</h2>
 	<input type="hidden" name="category" value="Job">
 	<input type="text" name="title" placeholder="Position*" required><br>
 	<textarea name="description" placeholder="description*" required></textarea><br>

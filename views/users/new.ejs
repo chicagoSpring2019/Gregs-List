@@ -1,18 +1,35 @@
 <%- include ../partials/header.ejs %>
 
-<p class="text-danger"> <%= message %> </p>
+<p class="text-danger ml-5"> <%= message %> </p>
 
-<form class="form" action="/users/register" method="POST">
-	<p>Account Info</p>
-  <input type="text" name="name" placeholder="username" required><br>
-  <input type="password" name="password" placeholder="password" required><br>
-  <p>Contact Info</p>
-  <input type="email" name="email" placeholder="email" required><br>
-  <input type="text" name="phone" placeholder="phone number(optional)"><br>
-  <input type="text" name="linkedin" placeholder="linkedIn Url(optional)"><br>
-  <button>Register</button>
+<form class="form m-5" action="/users/register" method="POST">
+	<div class="form-row">
+		<div class="col">
+			<div class="form-group m-3">
+				<label>Account Info</label>
+				<br>
+  				<input type="text" name="name" placeholder="username" required> 
+  				<input type="password" name="password" placeholder="password" required> 
+  			</div>
+  		</div>
+  	</div>
+  	<div class="form-row">
+  		<div class="col">
+			<div class="form-group m-3">
+    			<label>Contact Info</label>
+    			<br>
+  				<input type="email" name="email" placeholder="email" required>
+  				<br>
+  				<input type="text" name="phone" placeholder="phone number(optional)">
+  				<br>
+  				<input type="text" name="linkedin" placeholder="linkedIn Url(optional)">
+  				<br>
+  				<button class="m-2">Register</button>
+  			</div>
+  		</div>
+  	</div>
 </form>
 
-<p>Already have an account? <a href="/users/login">Login here</a></p>
+<p class="ml-5">Already have an account? <a href="/users/login">Login here</a></p>
 
 <%- include ../partials/footer.ejs %>
