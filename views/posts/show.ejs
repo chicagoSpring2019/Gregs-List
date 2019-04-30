@@ -8,6 +8,7 @@
 			</form>
 		</header>
 	<%}%>
+
 	<main class="m-5">
 		<h2><%=post.title%></h2>
 		<p>
@@ -15,6 +16,7 @@
 		</p>
 		<br>
 		<br>
+
 		<small>
 			<%if(post.email != ''){%>
 				Email: <p><%=post.email%></p>
@@ -31,13 +33,18 @@
 			<br>
 			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
 		</small>
+
 		<%if(post.category === 'Meet'){%>
 			<p class="text-danger"> <%= message %> </p>
+
 			<form action="/posts/<%=post._id%>/going?_method=PUT" method="POST">
 				<button>RSVP to <%= post.title%></button>
 			</form>
+
 			<p><%=post.attendance.length%> people are going</p>
+			
 			<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
 		<%}%>
 	</main>
+
 <%- include ../partials/footer.ejs %>

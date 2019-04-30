@@ -5,7 +5,6 @@ const User = require('../models/user')
 
 // MAIN PAGE - Lists all the main posts
 router.get('/', async (req, res, next) => {
-
 	try{
 		const allPosts = await Post.find({});
 		allPosts.sort(function(a,b){
@@ -23,15 +22,15 @@ router.get('/', async (req, res, next) => {
 
 // ROUTE TO THE POST CREATION PAGE
 router.get('/new', (req, res, next) => {
-    // ONLY Reachable if user id logged in
-    if (req.session.loggedIn === true) {
-        res.render('posts/new.ejs', {
-            session: req.session
-        })
-    } else {
-        req.session.message = "must be logged in to contribute";
-        res.redirect('/users/login')
-    }
+  // ONLY Reachable if user id logged in
+  if (req.session.loggedIn === true) {
+    res.render('posts/new.ejs', {
+      session: req.session
+    })
+  } else {
+    req.session.message = "must be logged in to contribute";
+    res.redirect('/users/login')
+  }
 })
 
 //routes for categories
@@ -52,7 +51,6 @@ router.get('/meet', (req, res, next) => {
 })
 
 // ROUTE TO POST NEW POSTS
-
 router.post('/', async (req, res, next) => { 
 	try {
 		const foundUser = await User.findById(req.session.userId);
@@ -151,9 +149,8 @@ router.put('/:id/going', async (req, res, next) => {
 	  try {
 	  	let attendanceCompare = false
 	  	const foundPost = await Post.findById(req.params.id);
-	  	const double = req.session.userId;
 	  	for(let i = 0; i < foundPost.attendance.length; i++) {
-	  		if(foundPost.attendance[i] == double){
+	  		if(foundPost.attendance[i] == req.session.userId){
 	  			attendanceCompare = true
 	  			req.session.message = 'You are already on the list'
 	  			res.redirect('/posts/' + req.params.id)
@@ -170,7 +167,7 @@ router.put('/:id/going', async (req, res, next) => {
 	  }
 	}
 	else{
-		req.session.message = 'Must be logged in to mark going'
+		req.session.message = 'Must be logged in to RSVP'
 		res.redirect('/users/login')
 	}
 })
@@ -183,14 +180,12 @@ router.put('/:id', async (req, res, next) => {
 
 // DELETE ROUTE for posts
 router.delete('/:id', async (req, res, next) => {
-    try {
-        const deletePost = await Post.deleteOne({
-            _id: req.params.id
-        })
-        res.redirect('/posts')
-    } catch (err) {
-        next(err)
-    }
+  try {
+    const deletePost = await Post.deleteOne({ _id: req.params.id});
+    res.redirect('/posts')
+  } catch (err) {
+    next(err)
+  }
 })
 
 module.exports = router;
