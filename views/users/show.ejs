@@ -5,6 +5,7 @@
 		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
 	</header>
 <%}%>
+
 <main class="m-4">
 	<p class="text-danger"> <%= message %> </p>
 	<h1><%=user.name%></h1>
@@ -17,6 +18,7 @@
 		<a href="<%=user.linkedin%>">LinkedIn Account</a>
 	<%}%>
 </main>
+
 <section class="m-4">
 	<h4><%=user.name%>'s Posts</h4>
 	<% 
@@ -33,40 +35,38 @@
 		}
 	})%>
 
-		<%if(jobs.length > 0){ %>
-			<h3>Job Listings</h3>
-			<%jobs.forEach((post) => {%>
-				<ul>
-					<li>
-						<a href="/posts/<%=post.id%>"><%=post.title%></a>
-					</li>
-				</ul>
-			<%})%>
-		<%}%>
+	<%if(jobs.length > 0){ %>
+		<h3>Job Listings</h3>
+		<%jobs.forEach((post) => {%>
+			<ul>
+				<li>
+					<a href="/posts/<%=post.id%>"><%=post.title%></a>
+				</li>
+			</ul>
+		<%})%>
+	<%}%>
 
-		<%if(hires.length > 0){ %>
-			<h3>Hires</h3>
-			<%hires.forEach((post) => {%>
-				<ul>
-					<li>
-						<a href="/posts/<%=post.id%>"><%=post.title%></a>
-					</li>
-				</ul>
-			<%})%>
-		<%}%>
+	<%if(hires.length > 0){ %>
+		<h3>Hires</h3>
+		<%hires.forEach((post) => {%>
+			<ul>
+				<li>
+					<a href="/posts/<%=post.id%>"><%=post.title%></a>
+				</li>
+			</ul>
+		<%})%>
+	<%}%>
 
-		<%if(meets.length > 0){ %>		
-			<h3>Meet-Ups</h3>
-			<%meets.forEach((post) => {%>
-				<ul>
-					<li>
-						<a href="/posts/<%=post.id%>"><%=post.title%></a>
-					</li>
-				</ul>
-			<%})%>
-		<%}%>
-	</ul>
-
-
-	
+	<%if(meets.length > 0){ %>		
+		<h3>Meet-Ups</h3>
+		<%meets.forEach((post) => {%>
+			<ul>
+				<li>
+					<a href="/posts/<%=post.id%>"><%=post.title%></a>
+				</li>
+			</ul>
+		<%})%>
+	<%}%>	
 </section>
+
+<%- include ../partials/footer.ejs %>
