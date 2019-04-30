@@ -19,9 +19,7 @@ const userSchema = new mongoose.Schema({
 		type: Number, 
 		sparse: true
 	},
-	linkedin: {
-		type: String
-	},
+	linkedin: String,
 	posts:[{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Post'
