@@ -58,7 +58,6 @@ router.post('/', async (req, res, next) => {
 		const foundUser = await User.findById(req.session.userId);
 		const postDbEntry = {};
 		postDbEntry.title = req.body.title
-		postDbEntry.image = req.body.image
 		postDbEntry.description = req.body.description
 		postDbEntry.location = req.body.location
 		postDbEntry.email = req.body.email
