@@ -2,10 +2,7 @@
 
 	<%if(user._id == session.userId){ %>
 		<header class="m-4">
-			<a href="/posts/<%=post._id%>/edit">Edit Post</a>
-			<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-				<button class="delete">Delete Post</button>
-			</form>
+			<a href="/posts/<%=post._id%>/edit">Edit or Delete Post</a>
 		</header>
 	<%}%>
 
@@ -14,26 +11,6 @@
 		<p>
 			Info:	<%=post.description%>
 		</p>
-		<br>
-		<br>
-
-		<small>
-			<%if(post.email != ''){%>
-				Email: <p><%=post.email%></p>
-			<%}%>
-			<br>
-			<%if(post.location != ''){%>
-				Location: <p><%=post.location%></p>
-			<%}%>
-			Date Posted: <p><%=post.date.toDateString()%></p>
-			<br>
-			<%if(post.category == 'Meet'){%>
-			<p>Event Time and date:  <%=post.time.toLocaleString()%></p>
-			<%}%>
-			<br>
-			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
-		</small>
-
 		<%if(post.category === 'Meet'){%>
 			<p class="text-danger"> <%= message %> </p>
 
@@ -45,6 +22,25 @@
 			
 			<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
 		<%}%>
+		<br>
+		<br>
+
+		<small>
+			<%if(post.email !== undefined){%>
+				Email: <p><%=post.email%></p>
+			<%}%>
+			<br>
+			<%if(post.location !== undefined){%>
+				Location: <p><%=post.location%></p>
+			<%}%>
+			Date Posted: <p><%=post.date.toDateString()%></p>
+			<br>
+			<%if(post.category == 'Meet'){%>
+			<p>Event Time and date:  <%=post.time.toLocaleString()%></p>
+			<%}%>
+			<br>
+			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
+		</small>
 	</main>
 
 <%- include ../partials/footer.ejs %>
