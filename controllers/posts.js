@@ -82,11 +82,14 @@ router.get('/:id', async (req, res, next) => {
 		const foundUser = await User.findOne({'posts': req.params.id})
 		.populate({path: 'posts', match: {_id: req.params.id}});
 		const foundYou = await User.findById(req.session.userId);
+		const msg = req.session.message
+    req.session.message = ''
 		res.render('posts/show.ejs', {
 			post: foundUser.posts[0],
 			user: foundUser,
 			session: req.session,
-			you: foundYou
+			you: foundYou,
+			message: msg,
 		})
 	}
 	catch(err){
@@ -142,25 +145,26 @@ router.get('/:id/edit', async (req, res, next) => {
 	}
 })
 
-// ROUTE for updating posts
-router.put('/:id', async (req, res, next) => {
+//route for marking going to event
+router.put('/:id/going', async (req, res, next) => {
 	if (req.session.loggedIn === true) {
 	  try {
+	  	let attendanceCompare = false
 	  	const foundPost = await Post.findById(req.params.id);
-	  	const foundUser = await User.findById(req.session.userId)
-	  	// const toStr = foundPost.attendance.toString();
-	  	// console.log(toStr);
-	  	const double = foundPost.attendance.includes(foundUser.name)
-	  	if(double === false){
-		  	foundPost.attendance.push(foundUser.name);
-		  	foundPost.save();
-		  }
-		  else{
-		  	req.session.message = 'You have already RSVPed'
-		  	res.redirect('/posts/' + req.params.id)
-		  }
-	    const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
-	    res.redirect('/posts/' + req.params.id)
+	  	const double = req.session.userId;
+	  	for(let i = 0; i < foundPost.attendance.length; i++) {
+	  		if(foundPost.attendance[i] == double){
+	  			attendanceCompare = true
+	  			req.session.message = 'You are already on the list'
+	  			res.redirect('/posts/' + req.params.id)
+	  		} 
+	  	}
+	  	if(!attendanceCompare) {
+			  foundPost.attendance.push(req.session.userId);
+			  foundPost.save();
+			  req.session.message = 'You have been added to the list'
+			  res.redirect('/posts/' + req.params.id)
+	  	}
 	  } catch (err) {
 	    next(err)
 	  }
@@ -169,6 +173,12 @@ router.put('/:id', async (req, res, next) => {
 		req.session.message = 'Must be logged in to mark going'
 		res.redirect('/users/login')
 	}
+})
+
+// ROUTE for updating posts
+router.put('/:id', async (req, res, next) => {
+	const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
+	res.redirect('/posts/' + req.params.id)
 })
 
 // DELETE ROUTE for posts
