@@ -54,7 +54,8 @@ p {
 }
 
 #column {
-	min-width: 200px;
+	min-width: 210px;
+	margin: 10px;
 }
 
 #header {
