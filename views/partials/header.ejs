@@ -21,10 +21,10 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-inverse navbar-fixed-top">
+	<nav id="header" class="navbar navbar-expand-lg navbar-dark bg-dark navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-	    		<a class="navbar-brand mx-4" id="siteBoard" href="/posts"><h3>Greg's List</h3></a>
+	    		<a class="navbar-brand mx-3" id="siteBoard" href="/posts"><h3>Greg's List</h3></a>
 	    	</div>
 	    	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav	" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    		<span class="navbar-toggler-icon"></span>
@@ -38,19 +38,19 @@
 	    		    	<a class="nav-link" href="/posts/new">Create Posting</a>
 	    		  	</li>
 	    		</ul>
-	    		<ul class="nav navbar-nav navbar-right">
+	    		<ul class="nav navbar-nav float-right ml-auto">
 	    		  	<%if(session.loggedIn){ %>
 						<li class="nav-item">
-							<a class="nav-link text-info" href="/users/<%=session.userId%>"><%=session.name%></a>
+							<a class="nav-link text-info float-right" href="/users/<%=session.userId%>"><%=session.name%></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/users/logout">Logout</a>
+							<a class="nav-link float-right" href="/users/logout">Logout</a>
 						</li>
-			  		<%}else{%>
+			  		<%} else{%>
 						<li class="nav-item">
 	    	    			<a class="nav-link" href="/users/login">Login</a><span class="glyphicon glyphicon-log-in"></span>
 	    	  			</li>
-	    	  			<li class="nav-item text-align-right">
+	    	  			<li class="nav-item">
 	    	    			<a class="nav-link" href="/users/register">Register</a><span class="glyphicon glyphicon-user"></span>
 	    	  			</li>
 			    	<%}%>
