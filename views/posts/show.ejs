@@ -32,10 +32,15 @@
 			<%if(post.email != ''){%>
 				Email: <p><%=post.email%></p>
 			<%}%>
+			<br>
 			<%if(post.location != ''){%>
 				Location: <p><%=post.location%></p>
 			<%}%>
 			Date Posted: <p><%=post.date.toDateString()%></p>
+			<br>
+			<%if(post.category == 'Meet'){%>
+			<p>Event Time and date:  <%=post.time.toLocaleString()%></p>
+			<%}%>
 			<br>
 			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
 		</small>
