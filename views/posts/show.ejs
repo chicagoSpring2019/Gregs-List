@@ -26,9 +26,11 @@
 			<br>
 			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
 		</small>
-		<!-- <form action="/posts/<%=post._id%>?_method=PUT" method="POST">
-			<button>Going to <%= post.title%></button>
+		<p class="text-danger"> <%= message %> </p>
+		<form action="/posts/<%=post._id%>/going?_method=PUT" method="POST">
+			<button>RSVP to <%= post.title%></button>
 		</form>
-		<a href="/posts/<%=post._id%>/attendance">See Who's Going</a> -->
+		<p><%=post.attendance.length%> people are going</p>
+		<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
 	</main>
 <%- include ../partials/footer.ejs %>
