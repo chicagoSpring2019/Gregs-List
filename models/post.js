@@ -24,7 +24,6 @@ const postSchema = new mongoose.Schema({
 	time: Date,
 	attendance: [{
 		type: mongoose.Schema.Types.ObjectId,
-		unique: true,
 		ref: 'User'
 	}]
 });
