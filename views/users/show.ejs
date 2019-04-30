@@ -1,71 +1,74 @@
 <%- include ../partials/header.ejs %>
 
 <%if(user._id == session.userId){%>
-	<header class="editB">
+	<header class="m-3">
 		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
 	</header>
 <%}%>
 <main class="m-4">
 	<p class="text-danger"> <%= message %> </p>
-	<h1><%=user.name%></h1>
+	<h1 class="ml-3"><strong><%=user.name%></strong></h1>
 	<h4>Contact Info</h4>
-	<p><%=user.description%></p>
-	<p><%=user.email%></p>
-	<a href="/users/<%=user.id%>/message">Send Email to <%=user.name%>%></a>
-	<p><%=user.phone%></p>
-	<%if(user.linkedin.length > 0){%>
-		<a href="<%=user.linkedin%>">LinkedIn Account</a>
-	<%}%>
+	<section class="ml-5">
+		<a href="/users/<%=user.id%>/message">Send an Email to <%=user.name%>%></a>
+		<%if(user.phone != null){%>
+			<p>Phone: <%=user.phone%> </p>
+		<%}%>		<br>
+		<%if(user.linkedin.length > 0){%>
+			<a href="<%=user.linkedin%>">LinkedIn Account</a>
+		<%}%>
+	</section>
 </main>
 <section class="m-4">
-	<h4><%=user.name%>'s Posts</h4>
-	<% 
-	const jobs = [];
-	const meets = [];
-	const hires = [];
-	posts.forEach((post) => { 
-		if(post.category === 'Job') {
-			jobs.push(post)
-		} else if (post.category === 'Meet') {
-			meets.push(post)
-		} else if (post.category === 'Hire') {
-			hires.push(post)
-		}
-	})%>
-
-		<%if(jobs.length > 0){ %>
-			<h3>Job Listings</h3>
-			<%jobs.forEach((post) => {%>
-				<ul>
-					<li>
-						<a href="/posts/<%=post.id%>"><%=post.title%></a>
-					</li>
-				</ul>
-			<%})%>
-		<%}%>
-
-		<%if(hires.length > 0){ %>
-			<h3>Hires</h3>
-			<%hires.forEach((post) => {%>
-				<ul>
-					<li>
-						<a href="/posts/<%=post.id%>"><%=post.title%></a>
-					</li>
-				</ul>
-			<%})%>
-		<%}%>
-
-		<%if(meets.length > 0){ %>		
-			<h3>Meet-Ups</h3>
-			<%meets.forEach((post) => {%>
-				<ul>
-					<li>
-						<a href="/posts/<%=post.id%>"><%=post.title%></a>
-					</li>
-				</ul>
-			<%})%>
-		<%}%>
-	</ul>
+	<h4><u><%=user.name%>'s Posts</u></h4>
+	<section class="ml-5">
+		<% 
+		const jobs = [];
+		const meets = [];
+		const hires = [];
+		posts.forEach((post) => { 
+			if(post.category === 'Job') {
+				jobs.push(post)
+			} else if (post.category === 'Meet') {
+				meets.push(post)
+			} else if (post.category === 'Hire') {
+				hires.push(post)
+			}
+		})%>
+	
+			<%if(jobs.length > 0){ %>
+				<h5>Job Listings</h5>
+				<%jobs.forEach((post) => {%>
+					<ul>
+						<li>
+							<a href="/posts/<%=post.id%>"><%=post.title%></a>
+						</li>
+					</ul>
+				<%})%>
+			<%}%>
+	
+			<%if(hires.length > 0){ %>
+				<h5>Hires</h5>
+				<%hires.forEach((post) => {%>
+					<ul>
+						<li>
+							<a href="/posts/<%=post.id%>"><%=post.title%></a>
+						</li>
+					</ul>
+				<%})%>
+			<%}%>
+	
+			<%if(meets.length > 0){ %>		
+				<h5>Meet-Ups</h5>
+				<%meets.forEach((post) => {%>
+					<ul>
+						<li>
+							<a href="/posts/<%=post.id%>"><%=post.title%></a>
+						</li>
+					</ul>
+				<%})%>
+			<%}%>
+	</section>
 </section>
 
 <%- include ../partials/footer.ejs %>
