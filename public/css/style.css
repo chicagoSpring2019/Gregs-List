@@ -44,3 +44,12 @@ a {
 p {
 	margin: 6px;
 }
+
+main {
+	min-height: 500px;
+
+}
+
+#column {
+	min-width: 200px;
+}
