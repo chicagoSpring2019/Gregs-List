@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema({
 	},
 	phone: {
 		type: Number, 
-		sparse: true
 	},
 	linkedin: {
 		type: String
