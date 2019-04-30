@@ -18,9 +18,7 @@ const userSchema = new mongoose.Schema({
 	phone: {
 		type: Number, 
 	},
-	linkedin: {
-		type: String
-	},
+	linkedin: String,
 	posts:[{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Post'
