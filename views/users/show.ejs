@@ -5,10 +5,10 @@
 		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
 	</header>
 <%}%>
-<main>
+<main class="m-4">
 	<p class="text-danger"> <%= message %> </p>
 	<h1><%=user.name%></h1>
-	<h2>Contact Info</h2>
+	<h4>Contact Info</h4>
 	<p><%=user.description%></p>
 	<p><%=user.email%></p>
 	<a href="/users/<%=user.id%>/message">Email: <%=user.name%>%></a>
@@ -17,20 +17,20 @@
 		<a href="<%=user.linkedin%>">LinkedIn Account</a>
 	<%}%>
 </main>
-<section>
-	<h2><%=user.name%>'s Posts</h2>
+<section class="m-4">
+	<h4><%=user.name%>'s Posts</h4>
 
 	<%for(let i = 0; i < posts.length; i++){%>
 		<%if(posts[i].category === 'Job'){%>
-			<h3>Job Listings</h3>
+			<h5>Job Listings</h5>
 			<a href="/posts/<%=posts[i].id%>"><%=posts[i].title%></a>
 
 		<%}else if(posts[i].category === 'Hire'){%>
-			<h3>Hires</h3>
+			<h5>Hires</h5>
 			<a href="/posts/<%=posts[i].id%>"><%=posts[i].title%></a>
 
 		<%}else if(posts[i].category === 'Meet'){%>
-			<h3>Meet-Ups</h3>
+			<h5>Meet-Ups</h5>
 			<a href="/posts/<%=posts[i].id%>"><%=posts[i].title%></a>
 		<%}%>
 	<%}%>
