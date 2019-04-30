@@ -1,25 +1,15 @@
-
-
 <%- include ../partials/header.ejs %>
 
-<% const categories = ['Job', 'Meet', 'Hire']%>
+<main class="m-5">
+	<h2>Create a Posting</h2>
+	<br>
+	<br>
+	<h5>Choose a Category</h5>
+	<ul class="list-group list-group-flush bg-light">
+	  	<li class="list-group-item"><a href="/posts/hire">Hire</a></li>
+	  	<li class="list-group-item"><a href="/posts/meet">Meet-Up</a></li>
+	  	<li class="list-group-item"><a href="/posts/job">Job Listing</a></li>
+	</ul>
+</main>
 
-<h2>Create a Posting</h2>
-<form class="form" action="/posts" method="POST">
-	<p>required*</p>
-	<input type="text" name="title" placeholder="title*" required><br>
-
-	<select name="category">
-		<% categories.forEach((category) => { %>
-
-			<option value="<%= category %>"> <%=category%> </option>
-		<% }) %>
-	</select>
-
-	<input type="text" name="image" placeholder="image URL"><br>
-	<textarea name="description" placeholder="description*" required></textarea><br>
-	<input type="text" name="location" placeholder="location"><br>
-	<input type="text" name="email" placeholder="email"><br>
-	<button>Create Post</button>
-</form>
 <%- include ../partials/footer.ejs %>

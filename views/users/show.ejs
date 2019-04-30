@@ -2,26 +2,71 @@
 
 <%if(user._id == session.userId){%>
 	<header class="editB">
-		<form action="/users/<%=user.id%>?_method=DELETE" method="post" >	
-			<button>Delete User</button>
-		</form>
-		<a href="/users/<%=user.id%>/edit">Edit User</a>
+		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
 	</header>
 <%}%>
-<main>
+
+<main class="m-4">
+	<p class="text-danger"> <%= message %> </p>
 	<h1><%=user.name%></h1>
+	<h4>Contact Info</h4>
 	<p><%=user.description%></p>
 	<p><%=user.email%></p>
+	<a href="/users/<%=user.id%>/message">Send Email to <%=user.name%>%></a>
 	<p><%=user.phone%></p>
-	<p><%=user.linkedin%></p>
+	<%if(user.linkedin.length > 0){%>
+		<a href="<%=user.linkedin%>">LinkedIn Account</a>
+	<%}%>
 </main>
-<section>
-	<h2><%=user.name%>'s Posts</h2>
-	<ul>
-		<%posts.forEach((post) => {%>
-			<li>
-				<a href="/posts/<%=post.id%>"><%=post.title%></a>
-			</li>
+
+<section class="m-4">
+	<h4><%=user.name%>'s Posts</h4>
+	<% 
+	const jobs = [];
+	const meets = [];
+	const hires = [];
+	posts.forEach((post) => { 
+		if(post.category === 'Job') {
+			jobs.push(post)
+		} else if (post.category === 'Meet') {
+			meets.push(post)
+		} else if (post.category === 'Hire') {
+			hires.push(post)
+		}
+	})%>
+
+	<%if(jobs.length > 0){ %>
+		<h3>Job Listings</h3>
+		<%jobs.forEach((post) => {%>
+			<ul>
+				<li>
+					<a href="/posts/<%=post.id%>"><%=post.title%></a>
+				</li>
+			</ul>
 		<%})%>
-	</ul>
+	<%}%>
+
+	<%if(hires.length > 0){ %>
+		<h3>Hires</h3>
+		<%hires.forEach((post) => {%>
+			<ul>
+				<li>
+					<a href="/posts/<%=post.id%>"><%=post.title%></a>
+				</li>
+			</ul>
+		<%})%>
+	<%}%>
+
+	<%if(meets.length > 0){ %>		
+		<h3>Meet-Ups</h3>
+		<%meets.forEach((post) => {%>
+			<ul>
+				<li>
+					<a href="/posts/<%=post.id%>"><%=post.title%></a>
+				</li>
+			</ul>
+		<%})%>
+	<%}%>	
 </section>
+
+<%- include ../partials/footer.ejs %>

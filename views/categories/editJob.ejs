@@ -1,0 +1,13 @@
+<%- include ../partials/header.ejs %>
+
+<form class="form m-3" action="/posts/<%=post._id%>?_method=PUT" method="POST">
+	<h2>Edit Job Listing</h2>
+	<input type="hidden" name="category" value="Job">
+	<input type="text" name="title" placeholder="Position*" value="<%=post.title%>" required><br>
+	<textarea name="description" placeholder="description*" required><%=post.description%></textarea><br>
+	<input type="text" name="location" placeholder="company*" value="<%=post.location%>" required><br>
+	<input type="text" name="email" placeholder="email*" value="<%=post.email%>" required><br>
+	<button>Edit Post</button>
+</form>
+
+<%- include ../partials/footer.ejs %>

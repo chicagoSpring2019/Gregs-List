@@ -1,0 +1,11 @@
+<%- include ../partials/header.ejs %>
+
+<form class="form" action="/users/messages" method="POST">
+	<h2>Email <%=user.name%></h2>
+	<input type="hidden" name="toEmail" value="<%=user.email%>"><br>
+	<input type="text" name="subject" placeholder="email subject"><br>
+	<textarea name="text" placeholder="email body"></textarea><br>
+	<button>Send Email</button>
+</form>
+
+<%- include ../partials/footer.ejs %>

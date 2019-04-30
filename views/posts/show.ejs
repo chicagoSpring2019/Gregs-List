@@ -1,19 +1,45 @@
 <%- include ../partials/header.ejs %>
+
 	<%if(user._id == session.userId){ %>
-		<header class="editB">
+		<header class="m-4">
 			<a href="/posts/<%=post._id%>/edit">Edit Post</a>
 			<form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
 				<button class="delete">Delete Post</button>
 			</form>
 		</header>
 	<%}%>
-	<main>
-		<h1><%=post.title%></h1>
-		<img src="<%=post.image%>">
-		<p><%=post.description%></p>
-		<p><%=post.email%></p>
-		<p><%=post.location%></p>
+
+	<main class="m-5">
+		<h2><%=post.title%></h2>
+		<p>
+			Info:	<%=post.description%>
+		</p>
+		<br>
+		<br>
+
+		<small>
+			<%if(post.email != ''){%>
+				Email: <p><%=post.email%></p>
+			<%}%>
+			<%if(post.location != ''){%>
+				Location: <p><%=post.location%></p>
+			<%}%>
+			Date Posted: <p><%=post.date.toDateString()%></p>
+			<br>
+			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
+		</small>
+
+		<%if(post.category === 'Meet'){%>
+			<p class="text-danger"> <%= message %> </p>
+
+			<form action="/posts/<%=post._id%>/going?_method=PUT" method="POST">
+				<button>RSVP to <%= post.title%></button>
+			</form>
+
+			<p><%=post.attendance.length%> people are going</p>
+			
+			<a href="/posts/<%=post._id%>/attendance">See Who's Going</a>
+		<%}%>
 	</main>
-	<a href="/users/<%= user._id %>"> Poster:<%= user.name %></a>
 
 <%- include ../partials/footer.ejs %>

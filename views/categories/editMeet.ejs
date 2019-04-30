@@ -1,0 +1,13 @@
+<%- include ../partials/header.ejs %>
+
+<form class="form m-3" action="/posts/<%=post._id%>?_method=PUT" method="POST">
+	<h2>Edit Event</h2>
+	<input type="hidden" name="category" value="Meet">
+	<input type="text" name="title" placeholder="title" value="<%=post.title%>" required><br>
+	<textarea name="description" placeholder="description" required><%=post.description%></textarea><br>
+	<input type="text" name="location" placeholder="location" value="<%=post.location%>" required><br>
+	<input type="datetime-local" name="time" value="<%=post.time%>" required><br>
+	<button>Edit Post</button>
+</form>
+
+<%- include ../partials/footer.ejs %>

@@ -3,31 +3,36 @@ const app            = express();
 const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
-const User           = require('./models/user')
+
+require('dotenv').config()
+
+const PORT = process.env.PORT
 
 require('./db/db')
 
 //controllers
 const usersController  = require('./controllers/users');
 const postsController = require('./controllers/posts');
-//const categoriesController     = require('./controllers/categoriesController');
 
 //middleware
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(session({
-  secret: 'This is a random secret string that you would make up to protect your session',
+  secret: process.env.SESSION_SECRET,
   resave: false, 
   saveUninitialized: false
 }));
 
+app.get('/', (req, res) => {
+	res.redirect('/posts')
+})
+ 
 //controllers
 app.use('/users', usersController);
 app.use('/posts', postsController);
-//app.use('/categories', categoriesController);
 
 //listener
-app.listen(3000, () => {
-  console.log('listening... on port: ', 3000);
+app.listen(PORT, () => {
+  console.log('listening... on port: ', PORT);
 });

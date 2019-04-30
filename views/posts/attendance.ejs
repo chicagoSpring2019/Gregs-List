@@ -1,0 +1,14 @@
+<%- include ../partials/header.ejs %>
+
+<h2>These People Are Attending</h2>
+
+<ul>
+	<% users.forEach((user) => { 
+		if(user.id)%>
+		<li>
+			<a href="/users/<%=user._id%>"><%=user.name%></a>
+		</li>
+	<% }) %>
+</ul>
+
+<%- include ../partials/footer.ejs %>
