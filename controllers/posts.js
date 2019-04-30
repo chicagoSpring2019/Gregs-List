@@ -148,12 +148,12 @@ router.put('/:id', async (req, res, next) => {
 	if (req.session.loggedIn === true) {
 	  try {
 	  	const foundPost = await Post.findById(req.params.id);
-	  	const double = foundPost.attendance.includes(req.session.id)
-	  	console.log(foundPost.attendance[0]);
-	  	console.log(req.session.userId);
-	  	console.log(double);
+	  	const foundUser = await User.findById(req.session.userId)
+	  	// const toStr = foundPost.attendance.toString();
+	  	// console.log(toStr);
+	  	const double = foundPost.attendance.includes(foundUser.name)
 	  	if(double === false){
-		  	foundPost.attendance.push(req.session.userId);
+		  	foundPost.attendance.push(foundUser.name);
 		  	foundPost.save();
 		  }
 		  else{
