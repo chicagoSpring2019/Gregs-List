@@ -98,7 +98,7 @@ router.get('/:id', async (req, res, next) => {
 //route for users attending an event
 router.get('/:id/attendance', async (req, res, next) => {
 	try{
-		const foundPost = await Post.findById(req.params.id)
+		const foundPost = await Post.findById(req.params.id).populate('attendance')
 		res.render('posts/attendance.ejs', {
 			users: foundPost.attendance,
 			session: req.session
@@ -145,16 +145,31 @@ router.get('/:id/edit', async (req, res, next) => {
 
 // ROUTE for updating posts
 router.put('/:id', async (req, res, next) => {
-  try {
-  	const foundPost = await Post.findById(req.params.id);
-  	foundPost.attendance.push(req.body.attendance);
-  	foundPost.save();
-    const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
-    console.log(foundPost.attendance);
-    res.redirect('/posts/' + req.params.id)
-  } catch (err) {
-    next(err)
-  }
+	if (req.session.loggedIn === true) {
+	  try {
+	  	const foundPost = await Post.findById(req.params.id);
+	  	const foundUser = await User.findById(req.session.userId)
+	  	// const toStr = foundPost.attendance.toString();
+	  	// console.log(toStr);
+	  	const double = foundPost.attendance.includes(foundUser.name)
+	  	if(double === false){
+		  	foundPost.attendance.push(foundUser.name);
+		  	foundPost.save();
+		  }
+		  else{
+		  	req.session.message = 'You have already RSVPed'
+		  	res.redirect('/posts/' + req.params.id)
+		  }
+	    const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true});
+	    res.redirect('/posts/' + req.params.id)
+	  } catch (err) {
+	    next(err)
+	  }
+	}
+	else{
+		req.session.message = 'Must be logged in to mark going'
+		res.redirect('/users/login')
+	}
 })
 
 // DELETE ROUTE for posts
