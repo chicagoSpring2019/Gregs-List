@@ -3,8 +3,8 @@
 <form class="form" action="/users/<%=user._id%>?_method=PUT" method="POST">
   <h2>Edit <%=user.username%>'s Profile</h2>
   <input type="email" name="email" placeholder="email" value="<%=user.email%>" required><br>
-  <input type="text" name="phone" placeholder="phone" value="<%=user.phone%>"><br>
-  <input type="text" name="linkedin" placeholder="LinkedIn" value="<%=user.linkedin%>"><br>
+  <input type="text" name="phone" placeholder="phone #(optional)" value="<%=user.phone%>"><br>
+  <input type="text" name="linkedin" placeholder="LinkedIn(optional)" value="<%=user.linkedin%>"><br>
   <button>Update</button>
   <a href="/users/<%=user.id%>/delete">Delete this User</a>
 </form>

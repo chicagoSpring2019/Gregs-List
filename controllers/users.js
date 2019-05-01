@@ -156,7 +156,7 @@ router.post('/messages', async (req, res, next) => {
     let info = await transporter.sendMail({
       from: 'gregsListAuto@gmail.com',
       to: req.body.toEmail,
-      subject: req.body.subject + ` sent from ${foundYou.name}`,
+      subject: req.body.subject + ` sent from user ${foundYou.name}`,
       text: req.body.text
     });
     req.session.message = "Email sent"
