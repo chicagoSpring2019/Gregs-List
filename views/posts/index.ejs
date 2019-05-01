@@ -17,32 +17,32 @@
 	<main>
 		<div class="container">
 	  			<div class="row">
-    			<div id="column" class="col m-4 bg-light">
+    			<div id="column" class="col m-4 pb-2 bg-light">
 					<h4>Jobs</h4>
 					<ul class="list-group list-group-flush">
 						<% jobs.forEach((post) => { %>
-							<li>
+							<li class="list-group-item">
 								<a href="/posts/<%=post._id%>"><%=post.title%></a>
 							</li>
 						<% }) %>
 					</ul>
 				</div>
-				<div id="column" class="col m-4 bg-light">
+				<div id="column" class="col m-4 pb-2 bg-light">
 					<h4>Meet - ups</h4>
 					<ul class="list-group list-group-flush">
 						<% meets.forEach((post) => { %>
-							<li>
+							<li class="list-group-item">
 								<a href="/posts/<%=post._id%>"><%=post.title%></a>
 							</li>
 						<% }) %>
 					</ul>
 				</div>
-				<div id="column" class="col m-4 bg-light">
+				<div id="column" class="col m-4 pb-2 bg-light">
 
 					<h4>Job Candidates</h4>
 					<ul class="list-group list-group-flush">
 						<% hires.forEach((post) => { %>
-							<li>
+							<li class="list-group-item">
 								<a href="/posts/<%=post._id%>"><%=post.title%></a>
 							</li>
 						<% }) %>
