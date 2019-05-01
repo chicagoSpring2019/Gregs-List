@@ -61,3 +61,7 @@ p {
 #header {
 	padding: 5px 10px;
 }
+
+.descrip {
+	max-width: 850px;
+}
