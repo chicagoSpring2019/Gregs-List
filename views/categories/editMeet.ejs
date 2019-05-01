@@ -7,6 +7,7 @@
 	<textarea name="description" placeholder="description" required><%=post.description%></textarea><br>
 	<input type="text" name="location" placeholder="location" value="<%=post.location%>" required><br>
 	<input type="datetime-local" name="time" value="<%=post.time%>" required><br>
+	<!-- post.time for value is not savoing anything to the edit page -->
 	<button>Edit Post</button>	
 </form>
 <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
