@@ -65,3 +65,8 @@ p {
 .descrip {
 	max-width: 850px;
 }
+
+textarea {
+	min-width: 350px;
+	min-height: 300px;
+}
