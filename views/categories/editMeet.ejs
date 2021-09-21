@@ -1,4 +1,4 @@
-<%- include ../partials/header.ejs %>
+<%- include ('../partials/header.ejs') %>
 
 <form class="form m-3" action="/posts/<%=post._id%>?_method=PUT" method="POST">
 	<h2>Edit Event</h2>
@@ -14,4 +14,4 @@
 	<button class="delete">Delete Post</button>
 </form>
 
-<%- include ../partials/footer.ejs %>
+<%- include ('../partials/footer.ejs') %>

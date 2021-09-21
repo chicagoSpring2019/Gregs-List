@@ -1,6 +1,5 @@
 const express        = require('express');
 const app            = express();
-const bodyParser     = require('body-parser');
 const methodOverride = require('method-override');
 const session        = require('express-session');
 
@@ -10,13 +9,9 @@ const PORT = process.env.PORT
 
 require('./db/db')
 
-//controllers
-const usersController  = require('./controllers/users');
-const postsController = require('./controllers/posts');
-
 //middleware
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -29,7 +24,10 @@ app.get('/', (req, res) => {
 })
  
 //controllers
+const usersController  = require('./controllers/users');
 app.use('/users', usersController);
+
+const postsController = require('./controllers/posts');
 app.use('/posts', postsController);
 
 //listener

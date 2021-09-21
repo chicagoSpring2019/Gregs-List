@@ -2,7 +2,7 @@
   "name": "gregs-list",
   "version": "1.0.0",
   "engines": {
-    "node": "10.15.3"
+    "node": "16.9.1"
   },
   "description": "Programming-oriented Job/Classified posting site developed for General Assembly's SEI Project #2",
   "main": "server.js",
@@ -21,14 +21,13 @@
   },
   "homepage": "https://github.com/GregGancarz/Gregs-List#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "dotenv": "^7.0.0",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-session": "^1.16.1",
-    "method-override": "^3.0.0",
-    "mongoose": "^5.5.3",
-    "nodemailer": "^6.1.1"
+    "bcryptjs": "2.4.3",
+    "dotenv": "10.0.0",
+    "ejs": "3.1.6",
+    "express": "4.17.1",
+    "express-session": "1.17.2",
+    "method-override": "3.0.0",
+    "mongoose": "^6.0.7",
+    "nodemailer": "^6.6.3"
   }
 }

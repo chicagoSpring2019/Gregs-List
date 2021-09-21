@@ -1,4 +1,4 @@
-<%- include ../partials/header.ejs %>
+<%- include ('../partials/header.ejs') %>
 
 <form class="form" action="/users/<%=user._id%>?_method=PUT" method="POST">
   <h2>Edit <%=user.name%>'s Profile</h2>
@@ -9,4 +9,4 @@
   <a href="/users/<%=user.id%>/delete">Delete this User</a>
 </form>
 
-<%- include ../partials/footer.ejs %>
+<%- include ('../partials/footer.ejs') %>

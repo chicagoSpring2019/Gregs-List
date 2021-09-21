@@ -4,8 +4,7 @@ const connectionString = 'mongodb://localhost/gregs-list14';
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false
+  useUnifiedTopology: true
 });
 
 mongoose.connection.on('connected', () => {
