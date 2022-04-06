@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://localhost/gregs-list14';
+const connectionString = process.env.MONGODB_URI;
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

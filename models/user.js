@@ -22,7 +22,14 @@ const userSchema = new mongoose.Schema({
 	posts:[{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Post'
-	}]
+	}],
+	googleId: {
+		type: String,
+		required: true
+	},
+	avatar: String
+}, {
+	timestamps: true
 });
 
 const User = mongoose.model('User', userSchema);
