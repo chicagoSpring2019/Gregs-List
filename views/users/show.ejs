@@ -1,6 +1,6 @@
 <%- include ('../partials/header.ejs') %>
 
-<%if(user._id == session.userId){%>
+<%if(user._id == session._id){%>
 	<header class="m-3">
 		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
 	</header>

@@ -1,6 +1,6 @@
 <%- include ('../partials/header.ejs') %>
 
-	<%if(user._id == session.userId){ %>
+	<%if(user._id == session._id){ %>
 		<header class="m-4">
 			<a href="/posts/<%=post._id%>/edit">Edit or Delete Post</a>
 		</header>

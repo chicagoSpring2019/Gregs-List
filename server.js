@@ -4,15 +4,20 @@ const app            = express();
 const methodOverride = require('method-override');
 const session        = require('express-session');
 const passport       = require('passport')
+const cookieParser   = require('cookie-parser')
+const logger         = require('morgan')
 require('dotenv').config()
 require('./config/db')
 require('./config/passport')
 const PORT = process.env.PORT
 
 //middleware
-app.use(express.static('public'));
+app.use(logger('dev'))
+app.use(express.json())
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser())
 app.use(methodOverride('_method'));
+app.use(express.static('public'));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false, 
@@ -20,7 +25,10 @@ app.use(session({
 }));
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.use(function (req, res, next) {
+  res.locals.user = req.user
+  next()
+})
 //routes
 app.get('/', (req, res) => {
 	res.redirect('/posts')

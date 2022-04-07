@@ -70,3 +70,9 @@ textarea {
 	min-width: 350px;
 	min-height: 300px;
 }
+
+.nav-link img {
+	max-height: 40px;
+	max-width: 40px;
+	border-radius: 50%;
+}

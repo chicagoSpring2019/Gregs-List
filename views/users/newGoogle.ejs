@@ -1,0 +1,21 @@
+<%- include ('../partials/header.ejs') %>
+
+<p class="text-danger ml-5"> <%= message %> </p>
+
+<form class="form m-5" action="/users/<%=user._id%>?_method=PUT"  method="POST">
+  <div class="form-row">
+  	<div class="col">
+			<div class="form-group m-3">
+  			<label>Contact Info</label>
+  			<br>
+  			<input type="number" name="phone" placeholder="phone #(optional)">
+  			<br>
+  			<input type="text" name="linkedin" placeholder="linkedIn Url(optional)">
+  			<br>
+  			<button class="m-2">Register</button>
+  		</div>
+  	</div>
+  </div>
+</form>
+
+<%- include ('../partials/footer.ejs') %>

@@ -6,7 +6,7 @@
 	<% users.forEach((user) => { 
 		if(user.id)%>
 		<li>
-			<a href="/users/<%=user._id%>"><%=user.name%></a>
+			<a href="/users/<%=user._id%>"><%=user.name%><img src="<%=user.avatar%>"></a>
 		</li>
 	<% }) %>
 </ul>

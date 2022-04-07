@@ -1,18 +1,43 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport')
 const Post = require('../models/post')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
+const isLoggedIn = require('../config/auth')
 
 ///////////////// AUTH //////////////
 //show login page
+router.get('/auth/google', passport.authenticate(
+  'google',
+  {scope: ['profile', 'email']}
+))
+
+router.get('/oauth2callback', passport.authenticate(
+  'google', { failureredirect : '/users/login'}),
+  function(req, res) {
+    if(req.user.createdAt === req.user.updatedAt){
+      res.redirect(`/users/register/${req.user._id}`)
+    }
+    else{
+      res.redirect('/posts')
+    }
+  }
+)
+
+router.get('/logout', function(req, res){
+  req.logout()
+  res.redirect('/posts')
+})
+
 router.get('/login', async (req, res, next) => {
   const msg = req.session.message
   req.session.message = ''
   res.render('users/login.ejs', {
     message: msg,
-    session: req.session
+    session: req.session,
+    user: req.user
   });
 });
 
@@ -22,21 +47,26 @@ router.get('/register', (req, res, next) => {
   req.session.message = ''
   res.render('users/new.ejs', {
     message: msg,
-    session: req.session
+    session: req.session,
+    user: req.user
   });
 });
+
+router.get('/register/:id', (req, res, next) => {
+  const msg = req.session.message
+  req.session.message = ''
+  res.render('users/newGoogle.ejs', {
+    message: msg,
+    session: req.session,
+    user: req.user
+  })
+})
 
 /// create new user from register page ///
 router.post('/register', async (req, res, next) => {
   const password = req.body.password;
   const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-  const userDbEntry = {};
-  userDbEntry.name = req.body.name
-  userDbEntry.password = passwordHash
-  userDbEntry.description = req.body.description
-  userDbEntry.email = req.body.email
-  userDbEntry.phone = req.body.phone
-  userDbEntry.linkedin = req.body.linkedin
+  req.body.password = passwordHash
   try {
     const foundName = await User.findOne({'name': req.body.name});
     const foundEmail = await User.findOne({'email': req.body.email});
@@ -56,7 +86,7 @@ router.post('/register', async (req, res, next) => {
       res.redirect('/users/register')
     } else {
       // create user
-      const createdUser = await User.create(userDbEntry)
+      const createdUser = await User.create(req.body)
       // they will be logged in (session)
       req.session.loggedIn = true
       req.session.userId = createdUser._id
@@ -93,19 +123,19 @@ router.post('/login', async (req, res, next) => {
 });
 
 // logout as a user/ end session
-router.get('/logout', (req, res, next) => {
-  req.session.destroy((err) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.redirect('/users/login');
-    }
-  })
-})
+// router.get('/logout', (req, res, next) => {
+//   req.session.destroy((err) => {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       res.redirect('/users/login');
+//     }
+//   })
+// })
 ////////// ^^^^ AUTH ^^^ ///////////////
 
 // USER profile show 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', isLoggedIn, async (req, res, next) => {
   try {
     const foundUser = await User.findById(req.params.id).populate('posts')
     const msg = req.session.message
@@ -114,6 +144,7 @@ router.get('/:id', async (req, res, next) => {
       user: foundUser,
       posts: foundUser.posts,
       session: req.session,
+      userSess: req.user,
       message: msg
     })
   } catch (err) {
@@ -122,29 +153,24 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // route to user email message page
-router.get('/:id/message', async (req, res, next) => {
-  if(req.session.loggedIn === true) {
+router.get('/:id/message', isLoggedIn, async (req, res, next) => {
     try{
       const foundUser = await User.findById(req.params.id)
       res.render('users/message.ejs', {
         session: req.session,
+        userSess: req.user,
         user: foundUser
       })
     }
     catch(err){
       next(err)
     }
-  }
-  else{
-    req.session.message = "must be logged in to message";
-    res.redirect('/users/login')
-  }
 })
 
 //route to send email
 router.post('/messages', async (req, res, next) => {
   try{
-    const foundYou = await User.findById(req.session.userId)
+    const foundYou = await User.findById(req.user._id)
     const foundUser = await User.findOne({'email': req.body.toEmail})
     let transporter = await nodemailer.createTransport({
       service: 'gmail',
@@ -184,13 +210,14 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 //shows user edit page
-router.get('/:id/edit', async (req, res, next) => {
+router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
   const foundUser = await User.findById(req.params.id);
-  if (foundUser._id == req.session.userId) {
+  if (foundUser._id == req.user._id) {
     try {
       res.render('users/edit.ejs', {
         user: foundUser,
-        session: req.session
+        session: req.session,
+        userSess: req.user
       });
     } catch (err) {
       next(err);
@@ -201,13 +228,14 @@ router.get('/:id/edit', async (req, res, next) => {
 });
 
 //shows profile delete page
-router.get('/:id/delete', async (req, res, next) => {
+router.get('/:id/delete', isLoggedIn, async (req, res, next) => {
   const foundUser = await User.findById(req.params.id);
-  if (foundUser._id == req.session.userId) {
+  if (foundUser._id == req.user._id) {
     try {
       res.render('users/delete.ejs', {
         user: foundUser,
-        session: req.session
+        session: req.session,
+        userSess: req.user
       });
     } catch (err) {
       next(err);
