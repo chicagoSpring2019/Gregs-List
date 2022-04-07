@@ -46,6 +46,14 @@
 							<a class="nav-link float-right" href="/users/logout">Logout</a>
 						</li>
 
+					<%}else if(user){ %>
+						<li class="nav-item">
+							<a class="nav-link text-info float-right" href="/users/<%=user._id%>"><%=user.name%><img src="<%=user.avatar%>"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link float-right" href="/users/logout/google">Logout</a>
+						</li>
+
 						<%}else{%>
 						<li class="nav-item">
 		        	<a class="nav-link" href="/users/login">Login</a><span class="glyphicon glyphicon-log-in"></span>

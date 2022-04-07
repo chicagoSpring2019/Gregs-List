@@ -1,6 +1,10 @@
 <%- include ('../partials/header.ejs') %>
 
-	<%if(user._id == session._id){ %>
+	<%if(foundUser._id == session.UserId){ %>
+		<header class="m-4">
+			<a href="/posts/<%=post._id%>/edit">Edit or Delete Post</a>
+		</header>
+	<%} else if(foundUser._id.equals(user._id)){ %>
 		<header class="m-4">
 			<a href="/posts/<%=post._id%>/edit">Edit or Delete Post</a>
 		</header>
@@ -28,7 +32,7 @@
 			<p>Event Time and date:  <%=post.time.toLocaleString()%></p>
 			<%}%>
 			<br>
-			Poster: <a href="/users/<%= user._id %>"><%= user.name %></a>
+			Poster: <a href="/users/<%= foundUser._id %>"><%= foundUser.name %></a>
 
 		<%if(post.category === 'Meet'){%>
 			<p class="text-danger"> <%= message %> </p>

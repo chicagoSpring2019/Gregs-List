@@ -13,8 +13,7 @@ router.get('/', async (req, res, next) => {
 		});
 		res.render('posts/index.ejs', {
 			posts: allPosts,
-			session: req.session,
-			user: req.user
+			session: req.session
 		})
 	}
 	catch(err){
@@ -26,28 +25,24 @@ router.get('/', async (req, res, next) => {
 router.get('/new', isLoggedIn, (req, res, next) => {
   // ONLY Reachable if user id logged in
     res.render('posts/new.ejs', {
-      session: req.session,
-			user: req.user
+      session: req.session
     })
 })
 
 //routes for categories
 router.get('/hire', (req, res, next) => {
 	res.render('categories/newHire.ejs', {
-		session: req.session,
-		user: req.user
+		session: req.session
 	})
 })
 router.get('/job', (req, res, next) => {
 	res.render('categories/newJob.ejs', {
-		session: req.session,
-		user: req.user
+		session: req.session
 	})
 })
 router.get('/meet', (req, res, next) => {
 	res.render('categories/newMeet.ejs', {
-		session: req.session,
-		user: req.user
+		session: req.session
 	})
 })
 
@@ -72,15 +67,13 @@ router.get('/:id', async (req, res, next) => {
 		// that matches the parameters and puts it in an array.
 		const foundUser = await User.findOne({'posts': req.params.id})
 		.populate({path: 'posts', match: {_id: req.params.id}});
-		const foundYou = await User.findById(req.user._id);
 		const msg = req.session.message
     req.session.message = ''
+    console.log(req.session);
 		res.render('posts/show.ejs', {
 			post: foundUser.posts[0],
-			user: foundUser,
+			foundUser: foundUser,
 			session: req.session,
-			userSess: req.user,
-			you: foundYou,
 			message: msg,
 		})
 	}
@@ -95,8 +88,7 @@ router.get('/:id/attendance', async (req, res, next) => {
 		const foundPost = await Post.findById(req.params.id).populate('attendance')
 		res.render('posts/attendance.ejs', {
 			users: foundPost.attendance,
-			session: req.session,
-			user: req.user
+			session: req.session
 		})
 	}
 	catch(err){
@@ -113,22 +105,19 @@ router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
 			if(foundPost.category === 'Hire'){
 				res.render('categories/editHire.ejs', {
 					post: foundPost,
-					session: req.session,
-					user: req.user
+					session: req.session
 				})
 			}
 			else if(foundPost.category === 'Job'){
 				res.render('categories/editJob.ejs', {
 					post: foundPost,
-					session: req.session,
-					user: req.user
+					session: req.session
 				})
 			}
 			else if(foundPost.category === 'Meet'){
 				res.render('categories/editMeet.ejs', {
 					post: foundPost,
-					session: req.session,
-					user: req.user
+					session: req.session
 				})
 			}
 		}

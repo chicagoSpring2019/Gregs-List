@@ -1,28 +1,32 @@
 <%- include ('../partials/header.ejs') %>
 
-<%if(user._id == session._id){%>
+<%if(foundUser._id == session.UserId){%>
 	<header class="m-3">
-		<a href="/users/<%=user.id%>/edit">Edit or Delete User</a>
+		<a href="/users/<%=foundUser.id%>/edit">Edit or Delete User</a>
+	</header>
+<%}else if(foundUser._id.equals(user._id)){%>
+	<header class="m-3">
+		<a href="/users/<%=foundUser.id%>/edit">Edit or Delete User</a>
 	</header>
 <%}%>
 
 <main class="m-4">
 	<p class="text-danger"> <%= message %> </p>
-	<h1 class="ml-3"><strong><%=user.name%></strong></h1>
+	<h1 class="ml-3"><strong><%=foundUser.name%></strong></h1>
 	<h4>Contact Info</h4>
 	<section class="ml-5">
-		<a href="/users/<%=user.id%>/message">Send an Email to <%=user.name%></a>
-		<%if(user.phone != null){%>
-			<p>Phone: <%=user.phone%> </p>
+		<a href="/users/<%=foundUser.id%>/message">Send an Email to <%=foundUser.name%></a>
+		<%if(foundUser.phone != null){%>
+			<p>Phone: <%=foundUser.phone%> </p>
 		<%}%>		<br>
-		<%if(user.linkedin.length > 0){%>
-			<a href="<%=user.linkedin%>">LinkedIn Account</a>
+		<%if(foundUser.linkedin.length > 0){%>
+			<a href="<%=foundUser.linkedin%>">LinkedIn Account</a>
 		<%}%>
 	</section>
 </main>
 
 <section class="m-4">
-	<h3><%=user.name%>'s Posts</h3>
+	<h3><%=foundUser.name%>'s Posts</h3>
 	<% 
 	const jobs = [];
 	const meets = [];

@@ -26,7 +26,7 @@ router.get('/oauth2callback', passport.authenticate(
   }
 )
 
-router.get('/logout', function(req, res){
+router.get('/logout/google', function(req, res){
   req.logout()
   res.redirect('/posts')
 })
@@ -36,8 +36,7 @@ router.get('/login', async (req, res, next) => {
   req.session.message = ''
   res.render('users/login.ejs', {
     message: msg,
-    session: req.session,
-    user: req.user
+    session: req.session
   });
 });
 
@@ -47,18 +46,18 @@ router.get('/register', (req, res, next) => {
   req.session.message = ''
   res.render('users/new.ejs', {
     message: msg,
-    session: req.session,
-    user: req.user
+    session: req.session
   });
 });
 
+//register with google
 router.get('/register/:id', (req, res, next) => {
   const msg = req.session.message
   req.session.message = ''
   res.render('users/newGoogle.ejs', {
     message: msg,
     session: req.session,
-    user: req.user
+    userId: req.params.id
   })
 })
 
@@ -123,15 +122,15 @@ router.post('/login', async (req, res, next) => {
 });
 
 // logout as a user/ end session
-// router.get('/logout', (req, res, next) => {
-//   req.session.destroy((err) => {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       res.redirect('/users/login');
-//     }
-//   })
-// })
+router.get('/logout', (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.redirect('/users/login');
+    }
+  })
+})
 ////////// ^^^^ AUTH ^^^ ///////////////
 
 // USER profile show 
@@ -141,10 +140,9 @@ router.get('/:id', isLoggedIn, async (req, res, next) => {
     const msg = req.session.message
     req.session.message = ''
     res.render('users/show.ejs', {
-      user: foundUser,
+      foundUser: foundUser,
       posts: foundUser.posts,
       session: req.session,
-      userSess: req.user,
       message: msg
     })
   } catch (err) {
@@ -158,8 +156,7 @@ router.get('/:id/message', isLoggedIn, async (req, res, next) => {
       const foundUser = await User.findById(req.params.id)
       res.render('users/message.ejs', {
         session: req.session,
-        userSess: req.user,
-        user: foundUser
+        foundUser: foundUser
       })
     }
     catch(err){
@@ -170,7 +167,7 @@ router.get('/:id/message', isLoggedIn, async (req, res, next) => {
 //route to send email
 router.post('/messages', async (req, res, next) => {
   try{
-    const foundYou = await User.findById(req.user._id)
+    const foundYou = await User.findById(req.user._id || req.session.userId)
     const foundUser = await User.findOne({'email': req.body.toEmail})
     let transporter = await nodemailer.createTransport({
       service: 'gmail',
@@ -215,9 +212,8 @@ router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
   if (foundUser._id == req.user._id) {
     try {
       res.render('users/edit.ejs', {
-        user: foundUser,
-        session: req.session,
-        userSess: req.user
+        foundUser: foundUser,
+        session: req.session
       });
     } catch (err) {
       next(err);
@@ -233,9 +229,8 @@ router.get('/:id/delete', isLoggedIn, async (req, res, next) => {
   if (foundUser._id == req.user._id) {
     try {
       res.render('users/delete.ejs', {
-        user: foundUser,
-        session: req.session,
-        userSess: req.user
+        foundUser: foundUser,
+        session: req.session
       });
     } catch (err) {
       next(err);
