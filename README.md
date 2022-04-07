@@ -1,6 +1,6 @@
 # Greg's List
 
-https://greg-list.herokuapp.com/
+https://gregslists.herokuapp.com/
 
 This is a coders take on Craigslist where users can read and create posts from different categories. These categories include Job Listing, Meet ups, and Job Candidates. To help help connect users you can send emails through the website.
 
