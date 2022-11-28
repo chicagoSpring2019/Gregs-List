@@ -8,9 +8,10 @@ const isLoggedIn = require('../config/auth')
 router.get('/', async (req, res, next) => {
 	try{
 		const allPosts = await Post.find({});
-		allPosts.sort(function(a,b){
-  			return new Date(b.date) - new Date(a.date);
-		});
+		// allPosts.sort(function(a,b){
+  		// 	return new Date(b.date) - new Date(a.date);
+		// });
+		// res.send(allPosts)
 		res.render('posts/index.ejs', {
 			posts: allPosts,
 			session: req.session
@@ -49,11 +50,21 @@ router.get('/meet', (req, res, next) => {
 // ROUTE TO POST NEW POSTS
 router.post('/', async (req, res, next) => { 
 	try {
-		const foundUser = await User.findById(req.user._id);
+		let foundUser
+		if(req.user){
+			console.log('if req.user')
+			foundUser = await User.findById(req.user._id);
+		}else if(req.session){
+			console.log(req.session)
+			foundUser = await User.findById(req.session.userId);
+		}
+		console.log(foundUser)
 		const createdPost = await Post.create(req.body);
 		foundUser.posts.push(createdPost);
 		foundUser.save()
-		res.redirect('/posts')
+		console.log(foundUser)
+		// res.redirect('/posts')
+		res.send(createdPost)
 	}
 	catch(err) {
 		next(err)
@@ -70,12 +81,13 @@ router.get('/:id', async (req, res, next) => {
 		const msg = req.session.message
     req.session.message = ''
     console.log(req.session);
-		res.render('posts/show.ejs', {
-			post: foundUser.posts[0],
-			foundUser: foundUser,
-			session: req.session,
-			message: msg,
-		})
+		res.send(foundUser.posts[0])
+		// res.render('posts/show.ejs', {
+		// 	post: foundUser.posts[0],
+		// 	foundUser: foundUser,
+		// 	session: req.session,
+		// 	message: msg,
+		// })
 	}
 	catch(err){
 		next(err)
@@ -102,6 +114,7 @@ router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
 	if(foundUser._id == req.user._id){
 		try{
 			const foundPost = await Post.findOne({_id: req.params.id})
+			res.send(foundPost)
 			if(foundPost.category === 'Hire'){
 				res.render('categories/editHire.ejs', {
 					post: foundPost,

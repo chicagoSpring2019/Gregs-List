@@ -11,8 +11,7 @@ const userSchema = new mongoose.Schema({
 	},
 	description: String,
 	email: {
-		type: String, 
-		required: true
+		type: String
 	},
 	phone: {
 		type: Number, 
@@ -23,8 +22,7 @@ const userSchema = new mongoose.Schema({
 		ref: 'Post'
 	}],
 	googleId: {
-		type: String,
-		required: true
+		type: String
 	},
 	avatar: String
 }, {

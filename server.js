@@ -9,7 +9,7 @@ const logger         = require('morgan')
 require('dotenv').config()
 require('./config/db')
 require('./config/passport')
-const PORT = process.env.PORT
+const PORT = 3000
 
 //middleware
 app.use(logger('dev'))
